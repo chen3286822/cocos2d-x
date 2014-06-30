@@ -12,16 +12,13 @@ fi
 if [ "$2" != "" ]; then
     CALL_BY_PKG=YES
     DIR=$2
-    QUICK_V3_ROOT="$DIR"
+    export QUICK_V3_ROOT="$DIR"
 else
-    QUICK_V3_ROOT="$DIR/.."
+    export QUICK_V3_ROOT=`dirname "$DIR"`
 fi;
-
-export QUICK_V3_CORE_PATH="$QUICK_V3_ROOT/quick"
 
 echo ""
 echo "QUICK_V3_ROOT = \"$QUICK_V3_ROOT\""
-echo "QUICK_V3_CORE_PATH = \"$QUICK_V3_CORE_PATH\""
 echo ""
 
 # set Xcode
@@ -43,10 +40,10 @@ else
 PROFILE_NAME=~/.profile
 fi
 
-sed -e '/QUICK_V3_ROOT/d' $PROFILE_NAME | sed -e '/add by quick-cocos2d-x setup/d' > $PROFILE_NAME.tmp
+sed -e '/QUICK_V3_ROOT/d' $PROFILE_NAME | sed -e '/add by quick-cocos2d-x v3 setup/d' > $PROFILE_NAME.tmp
 
 DATE=`date "+DATE: %Y-%m-%d TIME: %H:%M:%S"`
-echo "# add by quick-cocos2d-x setup, $DATE" >> $PROFILE_NAME.tmp
+echo "# add by quick-cocos2d-x v3 setup, $DATE" >> $PROFILE_NAME.tmp
 echo "export QUICK_V3_ROOT=\`cat ~/.QUICK_V3_ROOT\`" >> $PROFILE_NAME.tmp
 
 DATE=`date "+%Y-%m-%d-%H%M%S"`
@@ -61,15 +58,14 @@ echo ""
 
 if [ "$CALL_BY_PKG" != "" ]; then
 
-    $QUICK_V3_CORE_PATH/bin/install_luajit.sh
-    ln -s $QUICK_V3_CORE_PATH/player/mac/player.app $QUICK_V3_CORE_PATH/player.app
+    $QUICK_V3_ROOT/quick/bin/install_luajit.sh
 
 else
 
     while true; do
         read -p "Do you wish to install LuaJIT (Y/N) ? " yn
         case $yn in
-            [Yy]* ) echo ""; $QUICK_V3_CORE_PATH/bin/install_luajit.sh; break;;
+            [Yy]* ) echo ""; $QUICK_V3_ROOT/quick/bin/install_luajit.sh; break;;
             [Nn]* ) exit;;
             * ) echo "Please answer yes or no.";;
         esac
