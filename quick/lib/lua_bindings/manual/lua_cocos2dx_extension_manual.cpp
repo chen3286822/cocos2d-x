@@ -24,7 +24,6 @@
 #include "lua_cocos2dx_extension_manual.h"
 #include "cocos2d.h"
 #include "tolua_fix.h"
-#include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "cocos-ext.h"
 //#include "CCBProxy.h"

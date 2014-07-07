@@ -34,6 +34,9 @@ NS_CC_BEGIN
 
 namespace StringUtils {
 
+CC_DLL std::string format(const char* format, ...);
+CC_DLL template<typename T> std::string toString(T arg);
+
 /**
  *  @brief Converts utf8 string to utf16 string
  *  @param utf8 The utf8 string to be converted

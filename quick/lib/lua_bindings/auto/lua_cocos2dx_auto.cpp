@@ -2,8 +2,6 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
 
 
 int lua_cocos2dx_Ref_release(lua_State* tolua_S)

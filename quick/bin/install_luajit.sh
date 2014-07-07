@@ -1,7 +1,7 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOT_DIR="`dirname $DIR`"
-LUAJIT_SRC_DIR="$QUICK_V3_ROOT/quick/lib/LuaJIT-2.0.3"
+LUAJIT_SRC_DIR="$QUICK_V3_ROOT/quick/lib/luajit/LuaJIT-2.0.3"
 
 XCODE_PATH=`xcode-select -p`
 if [ ! -d "$XCODE_PATH" ]; then

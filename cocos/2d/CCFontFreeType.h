@@ -30,7 +30,7 @@
 #include "base/CCData.h"
 
 #include <string>
-#include <ft2build.h>
+#include "freetype2/include/ft2build_common.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define generic GenericFromFreeTypeLibrary

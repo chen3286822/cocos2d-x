@@ -55,6 +55,7 @@ THE SOFTWARE.
 #include "base/ZipUtils.h"
 #include "base/CCDirector.h"
 #include "base/CCProfiling.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 
 #include "CCGL.h"

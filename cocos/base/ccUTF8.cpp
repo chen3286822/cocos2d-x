@@ -23,6 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include <sstream>
 #include "ccUTF8.h"
 #include "platform/CCCommon.h"
 #include "base/CCConsole.h"
@@ -31,6 +32,36 @@
 NS_CC_BEGIN
 
 namespace StringUtils {
+
+std::string format(const char* format, ...)
+{
+#define CC_MAX_STRING_LENGTH (1024*100)
+
+    std::string ret;
+
+    va_list ap;
+    va_start(ap, format);
+
+    char* buf = (char*)malloc(CC_MAX_STRING_LENGTH);
+    if (buf != nullptr)
+    {
+        vsnprintf(buf, CC_MAX_STRING_LENGTH, format, ap);
+        ret = buf;
+        free(buf);
+    }
+    va_end(ap);
+    
+    return ret;
+}
+
+template<typename T>
+std::string toString(T arg)
+{
+    std::stringstream ss;
+    ss << arg;
+    return ss.str();
+}
+
 
 /*
  * @str:    the string to search through.

@@ -33,7 +33,7 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 
-#include "extensions/ExtensionMacros.h"
+#include "ExtensionMacros.h"
 #include "CCEditBoxImpl.h"
 
 

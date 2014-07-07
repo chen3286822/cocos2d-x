@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "base/CCEvent.h"
 #include "base/CCEventTouch.h"
 #include "base/ccCArray.h"
+#include "base/ccUTF8.h"
 #include "2d/CCGrid.h"
 #include "2d/CCActionManager.h"
 #include "base/CCScriptSupport.h"
@@ -48,8 +49,6 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
-
-#include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"

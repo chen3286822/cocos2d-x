@@ -35,11 +35,10 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
 #include "base/uthash.h"
+#include "base/ccUTF8.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCFileUtils.h"
 #include "CCGL.h"
-
-#include "deprecated/CCString.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "CCPrecompiledShaders.h"

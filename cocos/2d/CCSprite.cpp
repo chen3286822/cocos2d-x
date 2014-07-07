@@ -46,11 +46,10 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCDirector.h"
 #include "base/ccConfig.h"
+#include "base/ccUTF8.h"
 #include "math/CCGeometry.h"
 #include "math/CCAffineTransform.h"
 #include "math/TransformUtils.h"
-
-#include "deprecated/CCString.h"
 
 
 NS_CC_BEGIN

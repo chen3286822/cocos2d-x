@@ -32,6 +32,7 @@
 
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN

@@ -24,7 +24,6 @@
 #include "lua_cocos2dx_external_extra_manual.h"
 #include "cocos2d.h"
 #include "tolua_fix.h"
-#include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 
 #include "extra/cocos2dx_extra.h"

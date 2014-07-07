@@ -30,13 +30,12 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "base/ccConfig.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
 #include "math/TransformUtils.h"
-
-#include "deprecated/CCString.h"
 
 #if CC_LABELATLAS_DEBUG_DRAW
 #include "renderer/CCRenderer.h"

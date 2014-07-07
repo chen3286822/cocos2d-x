@@ -23,7 +23,6 @@
  ****************************************************************************/
 #include "lua_cocos2dx_manual.hpp"
 #include "tolua_fix.h"
-#include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
 #if defined(_MSC_VER) || defined(__MINGW32__)

@@ -1,7 +1,6 @@
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "cocos2d.h"
 #include "tolua_fix.h"
-#include "LuaBasicConversions.h"
 
 
 

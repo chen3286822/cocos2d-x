@@ -26,11 +26,11 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCAnimationCache.h"
 #include "base/ccMacros.h"
+#include "base/ccUTF8.h"
 #include "2d/CCAnimation.h"
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "platform/CCFileUtils.h"
-#include "deprecated/CCString.h"
 
 using namespace std;
 

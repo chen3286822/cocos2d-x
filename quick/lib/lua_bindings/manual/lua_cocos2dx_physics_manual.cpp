@@ -2,7 +2,6 @@
 
 #if CC_USE_PHYSICS
 #include "tolua_fix.h"
-#include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
 

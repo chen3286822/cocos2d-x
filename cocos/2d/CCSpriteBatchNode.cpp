@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "base/ccConfig.h"
 #include "base/CCDirector.h"
 #include "base/CCProfiling.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
@@ -45,9 +46,6 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "math/TransformUtils.h"
-
-#include "deprecated/CCString.h" // For StringUtils::format
-
 
 NS_CC_BEGIN
 

@@ -6,23 +6,23 @@ extern "C" {
 #endif
 
 // cjson
-#include "cjson/lua_cjson.h"
+#include "lua_extensions/cjson/lua_cjson.h"
     
 // zlib
-#include "zlib/lua_zlib.h"
+#include "lua_extensions/zlib/lua_zlib.h"
     
 // lpack
-#include "lpack/lpack.h"
+#include "lua_extensions/lpack/lpack.h"
 
 // filesystem
-#include "filesystem/lfs.h"
+#include "lua_extensions/filesystem/lfs.h"
     
 // lsqlite3
-#include "lsqlite3/lsqlite3.h"
+#include "lua_extensions/lsqlite3/lsqlite3.h"
     
 // socket
-#include "luasocket/luasocket.h"
-#include "luasocket/mime.h"
+#include "lua_extensions/socket/luasocket.h"
+#include "lua_extensions/socket/mime.h"
 
 static luaL_Reg luax_exts[] = {
     {"cjson", luaopen_cjson_safe},

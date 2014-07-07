@@ -20,7 +20,7 @@
  */
 
 #include "chipmunk_private.h"
-#include "constraints/util.h"
+#include "./util.h"
 
 // TODO: Comment me!
 

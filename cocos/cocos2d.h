@@ -120,8 +120,6 @@ THE SOFTWARE.
 #include "2d/CCTransition.h"
 #include "2d/CCTransitionPageTurn.h"
 #include "2d/CCTransitionProgress.h"
-#include "2d/CCMenu.h"
-#include "2d/CCMenuItem.h"
 #include "2d/CCClippingNode.h"
 #include "2d/CCClippingRegionNode.h"
 #include "2d/CCMotionStreak.h"
@@ -130,7 +128,6 @@ THE SOFTWARE.
 #include "2d/CCNodeGrid.h"
 #include "2d/CCParticleBatchNode.h"
 #include "2d/CCParticleSystem.h"
-#include "2d/CCParticleExamples.h"
 #include "2d/CCParticleSystemQuad.h"
 
 // 2d utils
@@ -265,20 +262,6 @@ THE SOFTWARE.
 
 // Audio
 #include "audio/include/SimpleAudioEngine.h"
-
-// Deprecated include
-#include "deprecated/CCDictionary.h"
-#include "deprecated/CCArray.h"
-#include "deprecated/CCSet.h"
-#include "deprecated/CCInteger.h"
-#include "deprecated/CCFloat.h"
-#include "deprecated/CCDouble.h"
-#include "deprecated/CCBool.h"
-#include "deprecated/CCString.h"
-#include "deprecated/CCNotificationCenter.h"
-// CCDeprecated.h must be included at the end
-#include "deprecated/CCDeprecated.h"
-
 
 NS_CC_BEGIN
 

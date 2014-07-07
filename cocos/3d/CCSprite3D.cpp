@@ -32,13 +32,12 @@
 #include "base/CCDirector.h"
 #include "base/CCPlatformMacros.h"
 #include "base/ccMacros.h"
+#include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
-
-#include "deprecated/CCString.h" // For StringUtils::format
 
 NS_CC_BEGIN
 

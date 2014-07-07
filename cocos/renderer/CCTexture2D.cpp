@@ -42,12 +42,10 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCPlatformMacros.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
-
-#include "deprecated/CCString.h"
-
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "renderer/CCTextureCache.h"

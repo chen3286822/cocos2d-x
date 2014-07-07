@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "base/TGAlib.h"
 #include "base/ccConfig.h"
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include <sstream>
 
 NS_CC_BEGIN

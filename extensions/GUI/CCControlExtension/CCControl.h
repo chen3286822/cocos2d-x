@@ -30,8 +30,8 @@
 #ifndef __CCCONTROL_H__
 #define __CCCONTROL_H__
 
-#include "CCControlUtils.h"
 #include "2d/CCLayer.h"
+#include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 

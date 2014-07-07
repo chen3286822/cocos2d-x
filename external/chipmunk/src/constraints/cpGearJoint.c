@@ -20,7 +20,7 @@
  */
 
 #include "chipmunk_private.h"
-#include "constraints/util.h"
+#include "util.h"
 
 static void
 preStep(cpGearJoint *joint, cpFloat dt)
