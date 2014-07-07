@@ -26,6 +26,10 @@ THE SOFTWARE.
 #ifndef __CC_COMMON_H__
 #define __CC_COMMON_H__
 
+#include <typeinfo>
+#include <string.h>
+#include <ctype.h>
+
 #include "base/CCPlatformMacros.h"
 
 NS_CC_BEGIN
@@ -34,6 +38,27 @@ NS_CC_BEGIN
  * @addtogroup platform
  * @{
  */
+
+static unsigned int _Hash(const char *key)
+{
+    size_t len = strlen(key);
+    const char *end = key + len;
+    unsigned int hash;
+    for (hash = 0; key < end; key++)
+    {
+        hash *= 16777619;
+        hash ^= (unsigned int)(unsigned char)toupper(*key);
+    }
+    return (hash);
+}
+
+unsigned int class_hash_code(const std::type_info& info)
+{
+    // hash name() to size_t value by pseudorandomizing transform
+    return _Hash(info.name());
+}
+
+#define CLASS_HASH_CODE class_hash_code
 
 /**
  * lua can not deal with ...

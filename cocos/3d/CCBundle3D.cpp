@@ -350,7 +350,7 @@ unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
 
 void Bundle3D::getModelPath(const std::string& path)
 {
-    int index = path.find_last_of('/');
+    size_t index = path.find_last_of('/');
     std::string fullModelPath;
     fullModelPath = path.substr(0, index + 1);
 

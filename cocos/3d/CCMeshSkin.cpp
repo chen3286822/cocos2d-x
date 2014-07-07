@@ -141,7 +141,7 @@ Bone* Bone::getParentBone()
 }
 int Bone::getChildBoneCount() const
 {
-    return _children.size();
+    return (int)_children.size();
 }
 Bone* Bone::getChildBoneByIndex(int index)
 {
@@ -198,7 +198,7 @@ void Bone::updateLocalMat()
             //if (_blendStates.size() == 1)
             if (true)
             {
-                int cnt = _blendStates.size();
+                size_t cnt = _blendStates.size();
                 translate = _blendStates[cnt - 1].localTranslate;
                 scale = _blendStates[cnt - 1].localScale;
                 quat = _blendStates[cnt - 1].localRot;

@@ -1,9 +1,14 @@
 
 #include "tolua_fix.h"
 #include "base/CCRef.h"
+#include "platform/CCCommon.h"
 #include <stdlib.h>
+#include <string>
+#include <map>
 
 using namespace cocos2d;
+
+static std::map<unsigned int, char*> hash_type_mapping;
 
 static int s_function_ref_id = 0;
 
@@ -35,7 +40,8 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
     }
     
     Ref* vPtr = static_cast<Ref*>(ptr);
-    const char* vType = getLuaTypeName(vPtr, type);
+    unsigned int hash = CLASS_HASH_CODE(typeid(*vPtr));
+    char* vType = hash_type_mapping[hash];
 
     if (*p_refid == 0)
     {
