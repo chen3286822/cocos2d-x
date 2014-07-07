@@ -8,7 +8,7 @@ LOCAL_MODULE_FILENAME := libgame
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
     ../../sources/AppDelegate.cpp \
-    ../../sources/SimulatorConfig.cpp
+    $(QUICK_V3_LIB)/ProjectConfig/SimulatorConfig.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../sources
 
@@ -30,4 +30,4 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos_lua_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,cocos2dx/lua-bindings)
+$(call import-module,lua_bindings)
