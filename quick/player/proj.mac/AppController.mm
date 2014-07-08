@@ -479,16 +479,7 @@ USING_NS_CC_EXTRA;
         }
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_listener2, 1);
-    
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeNewProject), "WELCOME_NEW_PROJECT", NULL);
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpen), "WELCOME_OPEN_PROJECT", NULL);
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeSamples), "WELCOME_LIST_SAMPLES", NULL);
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetStarted), "WELCOME_OPEN_DOCUMENTS", NULL);
-    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetCommunity), "WELCOME_OPEN_COMMUNITY", NULL);
-//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpenRecent), "WELCOME_OPEN_PROJECT_ARGS", NULL);
-    
-    
-    
+
     // send recent to Lua
     LuaValueArray titleArray;
     NSArray *recents = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recents"];
@@ -804,7 +795,7 @@ USING_NS_CC_EXTRA;
 
 - (IBAction) onPlayerShowProjectSandbox:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:CCFileUtils::sharedFileUtils()->getWritablePath().c_str() encoding:NSUTF8StringEncoding]];
+    [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:FileUtils::getInstance()->getWritablePath().c_str() encoding:NSUTF8StringEncoding]];
 }
 
 - (IBAction) onPlayerShowProjectFiles:(id)sender
@@ -818,7 +809,7 @@ USING_NS_CC_EXTRA;
     if (i >= 0 && i < SimulatorConfig::sharedDefaults()->getScreenSizeCount())
     {
         SimulatorScreenSize size = SimulatorConfig::sharedDefaults()->getScreenSize((int)i);
-        projectConfig.setFrameSize(projectConfig.isLandscapeFrame() ? CCSize(size.height, size.width) : CCSize(size.width, size.height));
+        projectConfig.setFrameSize(projectConfig.isLandscapeFrame() ? cocos2d::Size(size.height, size.width) : cocos2d::Size(size.width, size.height));
         projectConfig.setFrameScale(1.0f);
         [self relaunch];
     }

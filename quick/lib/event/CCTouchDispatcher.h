@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __TOUCH_DISPATCHER_CCTOUCH_DISPATCHER_H__
 
 #include "base/CCRef.h"
-#include "deprecated/CCArray.h"
+#include "base/ccCArray.h"
 #include "CCTouchDelegateProtocol.h"
 
 NS_CC_BEGIN

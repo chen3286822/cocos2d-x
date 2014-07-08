@@ -50,7 +50,6 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
 #include "event/CCScriptEventDispatcher.h"
-#include "event/CCTouchDispatcher.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"

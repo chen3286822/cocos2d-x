@@ -79,8 +79,8 @@ public:
     void addPackagePath(const string packagePath);
     const vector<string> getPackagePathArray(void);
 
-    const CCSize getFrameSize(void);
-    void setFrameSize(CCSize frameSize);
+    const cocos2d::Size getFrameSize(void);
+    void setFrameSize(cocos2d::Size frameSize);
     bool isLandscapeFrame(void);
     void changeFrameOrientation(void);
     void changeFrameOrientationToPortait(void);
@@ -99,8 +99,8 @@ public:
     void setWriteDebugLogToFile(bool writeDebugLogToFile);
     const string getDebugLogFilePath(void);
 
-    const CCPoint getWindowOffset(void);
-    void setWindowOffset(CCPoint windowOffset);
+    const cocos2d::Point getWindowOffset(void);
+    void setWindowOffset(cocos2d::Point windowOffset);
 
     int getDebuggerType(void);
     void setDebuggerType(int debuggerType);
@@ -120,13 +120,13 @@ private:
     string	m_scriptFile;
     string	m_packagePath;
     string  m_writablePath;
-    CCSize	m_frameSize;
+    cocos2d::Size m_frameSize;
     float	m_frameScale;
     bool	m_showConsole;
     bool    m_loadPrecompiledFramework;
     bool    m_writeDebugLogToFile;
     bool    m_restartProcess;
-    CCPoint	m_windowOffset;
+    cocos2d::Point m_windowOffset;
     int     m_debuggerType;
     bool    m_exitWhenRelaunch;
 
@@ -163,7 +163,7 @@ public:
     // predefined screen size
     int getScreenSizeCount(void);
     const SimulatorScreenSize getScreenSize(int index);
-    int checkScreenSize(const CCSize& size);
+    int checkScreenSize(const cocos2d::Size& size);
 
     // set quick-cocos2d-x root path
     void setQuickCocos2dxRootPath(const char *path);

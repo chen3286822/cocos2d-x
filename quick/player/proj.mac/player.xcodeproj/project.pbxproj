@@ -502,26 +502,21 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../src,
-					"$(QUICK_V3_ROOT)/cocos/platform/mac",
-					"$(QUICK_V3_ROOT)/external/glfw3/include/mac",
-					"$(QUICK_V3_ROOT)/external",
-					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
-					"$(QUICK_V3_ROOT)/external/lua/tolua",
-					"$(QUICK_V3_ROOT)/quick/lib/lua-bindings/manual",
-					"$(QUICK_V3_ROOT)/quick/lib/lua-bindings/auto",
-					"$(QUICK_V3_ROOT)/external/unzip",
-					"$(QUICK_V3_ROOT)/cocos",
-					"$(QUICK_V3_ROOT)/cocos/audio/include",
-					"$(QUICK_V3_ROOT)/quick/lib/extra",
-					"$(QUICK_V3_ROOT)/quick/lib",
+					"$(SRCROOT)/../../../cocos",
+					"$(SRCROOT)/../../../cocos/platform/mac",
+					"$(SRCROOT)/../../../extensions",
+					"$(SRCROOT)/../../../external",
+					"$(SRCROOT)/../../../external/glfw3/include/mac",
+					"$(SRCROOT)/../../../external/freetype2/include/mac",
+					"$(SRCROOT)/../../../quick/lib",
+					"$(SRCROOT)/../../../quick/lib/luajit/include",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/tolua",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/manual",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/auto",
+					"$(SRCROOT)/../src",
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-pagezero_size",
 					10000,
@@ -547,26 +542,21 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../src,
-					"$(QUICK_V3_ROOT)/cocos/platform/mac",
-					"$(QUICK_V3_ROOT)/external/glfw3/include/mac",
-					"$(QUICK_V3_ROOT)/external",
-					"$(QUICK_V3_ROOT)/external/lua/luajit/include",
-					"$(QUICK_V3_ROOT)/external/lua/tolua",
-					"$(QUICK_V3_ROOT)/quick/lib/lua-bindings/manual",
-					"$(QUICK_V3_ROOT)/quick/lib/lua-bindings/auto",
-					"$(QUICK_V3_ROOT)/external/unzip",
-					"$(QUICK_V3_ROOT)/cocos",
-					"$(QUICK_V3_ROOT)/cocos/audio/include",
-					"$(QUICK_V3_ROOT)/quick/lib/extra",
-					"$(QUICK_V3_ROOT)/quick/lib",
+					"$(SRCROOT)/../../../cocos",
+					"$(SRCROOT)/../../../cocos/platform/mac",
+					"$(SRCROOT)/../../../extensions",
+					"$(SRCROOT)/../../../external",
+					"$(SRCROOT)/../../../external/glfw3/include/mac",
+					"$(SRCROOT)/../../../external/freetype2/include/mac",
+					"$(SRCROOT)/../../../quick/lib",
+					"$(SRCROOT)/../../../quick/lib/luajit/include",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/tolua",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/manual",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/auto",
+					"$(SRCROOT)/../src",
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/cocos2d_tests-axzqtwgwkrktttafksiahajkeowp/Build/Products/Debug",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-pagezero_size",
 					10000,

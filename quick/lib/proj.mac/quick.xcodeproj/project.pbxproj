@@ -604,7 +604,6 @@
 		F4534F261961278E007B5CC8 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = F4534EF21961278E007B5CC8 /* xxhash.h */; };
 		F4534F271961278E007B5CC8 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4534EF41961278E007B5CC8 /* xxtea.cpp */; };
 		F4534F281961278E007B5CC8 /* xxtea.h in Headers */ = {isa = PBXBuildFile; fileRef = F4534EF51961278E007B5CC8 /* xxtea.h */; };
-		F4534F2A1961288F007B5CC8 /* ft2build_common.h in Headers */ = {isa = PBXBuildFile; fileRef = F4534F291961288F007B5CC8 /* ft2build_common.h */; };
 		F4534F3719613A92007B5CC8 /* document.h in Headers */ = {isa = PBXBuildFile; fileRef = F4534F2C19613A92007B5CC8 /* document.h */; };
 		F4534F3819613A92007B5CC8 /* filestream.h in Headers */ = {isa = PBXBuildFile; fileRef = F4534F2D19613A92007B5CC8 /* filestream.h */; };
 		F4534F3919613A92007B5CC8 /* pow10.h in Headers */ = {isa = PBXBuildFile; fileRef = F4534F2F19613A92007B5CC8 /* pow10.h */; };
@@ -617,6 +616,8 @@
 		F4534F4019613A92007B5CC8 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = F4534F3619613A92007B5CC8 /* writer.h */; };
 		F4534F4319613FFF007B5CC8 /* CCControlUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4534F4119613FFF007B5CC8 /* CCControlUtils.cpp */; };
 		F4534F4419613FFF007B5CC8 /* CCControlUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = F4534F4219613FFF007B5CC8 /* CCControlUtils.h */; };
+		F4F53F0E196B96F900DF2F29 /* CCScriptEventDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4F53F07196B96F900DF2F29 /* CCScriptEventDispatcher.cpp */; };
+		F4F53F0F196B96F900DF2F29 /* CCScriptEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = F4F53F08196B96F900DF2F29 /* CCScriptEventDispatcher.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1251,7 +1252,6 @@
 		F4534EF21961278E007B5CC8 /* xxhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxhash.h; sourceTree = "<group>"; };
 		F4534EF41961278E007B5CC8 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
 		F4534EF51961278E007B5CC8 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
-		F4534F291961288F007B5CC8 /* ft2build_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ft2build_common.h; sourceTree = "<group>"; };
 		F4534F2C19613A92007B5CC8 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		F4534F2D19613A92007B5CC8 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
 		F4534F2F19613A92007B5CC8 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
@@ -1264,6 +1264,8 @@
 		F4534F3619613A92007B5CC8 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		F4534F4119613FFF007B5CC8 /* CCControlUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCControlUtils.cpp; sourceTree = "<group>"; };
 		F4534F4219613FFF007B5CC8 /* CCControlUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlUtils.h; sourceTree = "<group>"; };
+		F4F53F07196B96F900DF2F29 /* CCScriptEventDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptEventDispatcher.cpp; sourceTree = "<group>"; };
+		F4F53F08196B96F900DF2F29 /* CCScriptEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptEventDispatcher.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2023,6 +2025,7 @@
 		F453474B19611694007B5CC8 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				F4F53F05196B96F900DF2F29 /* event */,
 				F453474C196116AF007B5CC8 /* lua_bindings */,
 				F410BD9619614503005DCAE1 /* lua_extensions */,
 				F45347BE196116BA007B5CC8 /* luajit */,
@@ -2171,7 +2174,6 @@
 		F45348A1196126D9007B5CC8 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				F4534F291961288F007B5CC8 /* ft2build_common.h */,
 				F453498F196126DA007B5CC8 /* mac */,
 			);
 			path = include;
@@ -2651,6 +2653,15 @@
 			path = internal;
 			sourceTree = "<group>";
 		};
+		F4F53F05196B96F900DF2F29 /* event */ = {
+			isa = PBXGroup;
+			children = (
+				F4F53F07196B96F900DF2F29 /* CCScriptEventDispatcher.cpp */,
+				F4F53F08196B96F900DF2F29 /* CCScriptEventDispatcher.h */,
+			);
+			path = event;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2712,6 +2723,7 @@
 				F4534EFE1961278E007B5CC8 /* types.h in Headers */,
 				F45345D2196113DE007B5CC8 /* CCEventListenerKeyboard.h in Headers */,
 				F410BE411961468C005DCAE1 /* mime.h in Headers */,
+				F4F53F0F196B96F900DF2F29 /* CCScriptEventDispatcher.h in Headers */,
 				F4534C3B196126DA007B5CC8 /* svxf86nm.h in Headers */,
 				F4534E0A19612711007B5CC8 /* pnglibconf.h in Headers */,
 				F45345F6196113DE007B5CC8 /* CCUserDefault.h in Headers */,
@@ -2883,7 +2895,6 @@
 				F4534C11196126DA007B5CC8 /* ftsnames.h in Headers */,
 				F45344BC196113AB007B5CC8 /* CCComponentContainer.h in Headers */,
 				F4534BF1196126DA007B5CC8 /* ftstdlib.h in Headers */,
-				F4534F2A1961288F007B5CC8 /* ft2build_common.h in Headers */,
 				F45346F419611538007B5CC8 /* CCFileUtilsApple.h in Headers */,
 				F4534F4019613A92007B5CC8 /* writer.h in Headers */,
 				F4534519196113AB007B5CC8 /* CCAnimationCurve.h in Headers */,
@@ -3181,6 +3192,7 @@
 				F45346AA19611490007B5CC8 /* CCPhysicsWorld.cpp in Sources */,
 				F4534513196113AB007B5CC8 /* CCTweenFunction.cpp in Sources */,
 				F410BE421961468C005DCAE1 /* options.c in Sources */,
+				F4F53F0E196B96F900DF2F29 /* CCScriptEventDispatcher.cpp in Sources */,
 				F45344B3196113AB007B5CC8 /* CCAtlasNode.cpp in Sources */,
 				F45346CE19611490007B5CC8 /* CCRenderer.cpp in Sources */,
 				F45345FD196113DE007B5CC8 /* CCValue.cpp in Sources */,
@@ -3408,12 +3420,17 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../cocos",
+					"$(SRCROOT)/../../../cocos/platform/mac",
 					"$(SRCROOT)/../../../extensions",
 					"$(SRCROOT)/../../../external",
+					"$(SRCROOT)/../../../external/glfw3/include/mac",
 					"$(SRCROOT)/../../../external/freetype2/include/mac",
 					"$(SRCROOT)/../../../quick/lib",
+					"$(SRCROOT)/../../../quick/lib/luajit/include",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/tolua",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/manual",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/auto",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3421,7 +3438,6 @@
 					/Users/dualface/Documents/Games/v3quick/external/freetype2/prebuilt/mac,
 					/Users/dualface/Documents/Games/v3quick/external/glfw3/prebuilt/mac,
 					/Users/dualface/Documents/Games/v3quick/external/jpeg/prebuilt/mac,
-					/Users/dualface/Documents/Games/v3quick/external/jpeg/prebuilt/win32,
 					/Users/dualface/Documents/Games/v3quick/external/png/prebuilt/mac,
 					/Users/dualface/Documents/Games/v3quick/external/tiff/prebuilt/mac,
 					/Users/dualface/Documents/Games/v3quick/external/webp/prebuilt/mac,
@@ -3440,12 +3456,17 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/../../../cocos/cocos2d-prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../cocos",
+					"$(SRCROOT)/../../../cocos/platform/mac",
 					"$(SRCROOT)/../../../extensions",
 					"$(SRCROOT)/../../../external",
+					"$(SRCROOT)/../../../external/glfw3/include/mac",
 					"$(SRCROOT)/../../../external/freetype2/include/mac",
 					"$(SRCROOT)/../../../quick/lib",
+					"$(SRCROOT)/../../../quick/lib/luajit/include",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/tolua",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/manual",
+					"$(SRCROOT)/../../../quick/lib/lua_bindings/auto",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3453,7 +3474,6 @@
 					/Users/dualface/Documents/Games/v3quick/external/freetype2/prebuilt/mac,
 					/Users/dualface/Documents/Games/v3quick/external/glfw3/prebuilt/mac,
 					/Users/dualface/Documents/Games/v3quick/external/jpeg/prebuilt/mac,
-					/Users/dualface/Documents/Games/v3quick/external/jpeg/prebuilt/win32,
 					/Users/dualface/Documents/Games/v3quick/external/png/prebuilt/mac,
 					/Users/dualface/Documents/Games/v3quick/external/tiff/prebuilt/mac,
 					/Users/dualface/Documents/Games/v3quick/external/webp/prebuilt/mac,
