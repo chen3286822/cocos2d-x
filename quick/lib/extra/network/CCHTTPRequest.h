@@ -20,10 +20,12 @@
 #include <vector>
 #include <map>
 #include <string>
+#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
 #include "curl/curl.h"
+#endif
 
 using namespace std;
-USING_NS_CC;
+//USING_NS_CC;
 
 NS_CC_EXTRA_BEGIN
 
@@ -148,8 +150,18 @@ private:
     , m_responseBufferLength(0)
     , m_responseDataLength(0)
     , m_curlState(kCCHTTPRequestCURLStateIdle)
-	, m_formPost(NULL)
-	, m_lastPost(NULL)
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    , m_httpConnect(NULL)
+    , m_cookies(NULL)
+    , m_nTimeOut(0)
+#else
+    , m_formPost(NULL)
+    , m_lastPost(NULL)
+#endif
+    , m_dltotal(0)
+    , m_dlnow(0)
+    , m_ultotal(0)
+    , m_ulnow(0)
     {
     }
     bool initWithDelegate(HTTPRequestDelegate* delegate, const char *url, int method);
@@ -165,13 +177,15 @@ private:
 
     static unsigned int s_id;
     string m_url;
-    CURL *m_curl;
     HTTPRequestDelegate* m_delegate;
     int m_listener;
     int m_curlState;
 
+#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+    CURL *m_curl;
 	curl_httppost *m_formPost;
 	curl_httppost *m_lastPost;
+#endif
 
     int     m_state;
     int     m_errorCode;
@@ -182,6 +196,15 @@ private:
     Fields m_postFields;
     HTTPRequestHeaders m_headers;
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    jobject m_httpConnect;
+    char* m_httpMethod;
+    Fields m_postFile;
+    Fields m_postContent;
+    int m_nTimeOut;
+    const char* m_cookies;
+#endif
+
     // response
     int m_responseCode;
     HTTPRequestHeaders m_responseHeaders;
@@ -189,6 +212,11 @@ private:
     size_t m_responseBufferLength;
     size_t m_responseDataLength;
     string m_responseCookies;
+    
+    double m_dltotal;
+    double m_dlnow;
+    double m_ultotal;
+    double m_ulnow;
 
     // private methods
     void cleanup(void);
@@ -210,6 +238,35 @@ private:
     static size_t writeDataCURL(void *buffer, size_t size, size_t nmemb, void *userdata);
     static size_t writeHeaderCURL(void *buffer, size_t size, size_t nmemb, void *userdata);
     static int progressCURL(void *userdata, double dltotal, double dlnow, double ultotal, double ulnow);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+    pthread_attr_t m_threadAttr;
+
+    bool isNeedBoundary();
+
+    void createURLConnectJava();
+    void setRequestMethodJava();
+    void addRequestHeaderJava(const char* key, const char* value, bool bBoundary);
+    void setTimeoutJava(int msTime);
+    int connectJava();
+    void postContentJava(const char* key, const char* value);
+    void postFromContentJava(const char* key, const char* value);
+    void postFromFileJava(const char* fileName, const char* filePath);
+    void postFormEndJava(bool bBoundary);
+    int getResponedCodeJava();
+    char* getResponedErrJava();
+    char* getResponedHeaderJava();
+    char* getResponedHeaderByIdxJava(int idx);
+    char* getResponedHeaderByKeyJava(const char* key);
+    int getResponedHeaderByKeyIntJava(const char* key);
+    int   getResponedStringJava(char** ppData);
+    void closeJava();
+
+    int   getCStrFromJByteArray(jbyteArray jba, JNIEnv* env, char** ppData);
+    char* getCStrFromJString(jstring jstr, JNIEnv* env);
+#endif
+
 };
 
 NS_CC_EXTRA_END

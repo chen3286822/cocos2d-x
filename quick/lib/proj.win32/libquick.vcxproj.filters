@@ -22,9 +22,6 @@
     <Filter Include="cocos\base">
       <UniqueIdentifier>{56bdfbf7-0817-4c19-bb4a-401e280eb1f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocos\deprecated">
-      <UniqueIdentifier>{08f3a30f-8add-4050-9352-f09ca6f02da2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocos\math">
       <UniqueIdentifier>{6a6a2134-bb39-4b14-beef-5cd05dc2becc}</UniqueIdentifier>
     </Filter>
@@ -307,6 +304,60 @@
     <Filter Include="libquick\extra\platform\win32">
       <UniqueIdentifier>{b7306df9-8797-4c30-87c9-a609743d1ff6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="libquick\codeide">
+      <UniqueIdentifier>{003d9c2d-c937-49e3-8f0e-f229e74ca887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\codeide\runtime">
+      <UniqueIdentifier>{185a0cd5-aae4-4f67-aca9-5bf515bea219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\codeide\protobuf-lite">
+      <UniqueIdentifier>{f4663516-d615-4bae-8cf7-5df4684a8b5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\codeide\protobuf-lite\google">
+      <UniqueIdentifier>{a73ec572-0e16-43e7-84bc-8f356275e934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\codeide\protobuf-lite\google\protobuf">
+      <UniqueIdentifier>{a1e809e0-03a6-4946-b8cb-3546eb327439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\codeide\protobuf-lite\google\protobuf\io">
+      <UniqueIdentifier>{bbaa34e4-724d-43f2-8ce9-015d0fb3cdf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\codeide\protobuf-lite\google\protobuf\stubs">
+      <UniqueIdentifier>{8921664a-d87b-4425-aba1-d7130e80656c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\codeide\platform">
+      <UniqueIdentifier>{10f66c1b-aea8-460c-a04d-df6d12e1489c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\codeide\platform\win">
+      <UniqueIdentifier>{adfb4a10-472c-4268-b393-f9eedc60a5aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\editor-support">
+      <UniqueIdentifier>{352834bb-cfdc-4cd8-a0f2-4d903c1fc335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocos\editor-support\cocostudio">
+      <UniqueIdentifier>{f0bf64ba-443b-4606-a709-2239594ed64f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\filters">
+      <UniqueIdentifier>{79207f1e-b0ce-46aa-9f1f-ebcc7d8c5d51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\luabinding">
+      <UniqueIdentifier>{9cb4c300-2978-4981-912c-d9b3ea614208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\filters\filters">
+      <UniqueIdentifier>{d4ff0d96-069d-4e4b-a44b-fb82a872695f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\filters\nodes">
+      <UniqueIdentifier>{7bca28a5-77d7-4e8d-9bb6-231f627a24a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\filters\shaders">
+      <UniqueIdentifier>{6202216c-a1a6-4348-9a50-2aa6cb804e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libquick\extra\native">
+      <UniqueIdentifier>{2dd886df-091c-4ce0-a3d6-5ddb6760c2eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extensions\GUI\CCTextField">
+      <UniqueIdentifier>{47bf8197-5cde-469d-bbb1-948e1aab5885}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\cocos\2d\CCActionManager.h">
@@ -384,9 +435,6 @@
     <ClInclude Include="..\..\..\cocos\2d\CCLabelAtlas.h">
       <Filter>cocos\2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\cocos\2d\CCLabelBMFont.h">
-      <Filter>cocos\2d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\cocos\2d\CCLabelTextFormatter.h">
       <Filter>cocos\2d</Filter>
     </ClInclude>
@@ -394,12 +442,6 @@
       <Filter>cocos\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\2d\CCLayer.h">
-      <Filter>cocos\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\2d\CCMenu.h">
-      <Filter>cocos\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\2d\CCMenuItem.h">
       <Filter>cocos\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\2d\CCMotionStreak.h">
@@ -558,9 +600,6 @@
     <ClInclude Include="..\..\..\cocos\base\CCData.h">
       <Filter>cocos\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\cocos\base\CCDataVisitor.h">
-      <Filter>cocos\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\cocos\base\CCDirector.h">
       <Filter>cocos\base</Filter>
     </ClInclude>
@@ -660,9 +699,6 @@
     <ClInclude Include="..\..\..\cocos\base\ccTypes.h">
       <Filter>cocos\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\cocos\base\CCUserDefault.h">
-      <Filter>cocos\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\cocos\base\ccUTF8.h">
       <Filter>cocos\base</Filter>
     </ClInclude>
@@ -704,36 +740,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\base\base64.h">
       <Filter>cocos\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCBool.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCDeprecated.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCDictionary.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCDouble.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCFloat.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCInteger.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCNotificationCenter.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCSet.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCString.h">
-      <Filter>cocos\deprecated</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\cocos\deprecated\CCArray.h">
-      <Filter>cocos\deprecated</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\cocos\math\CCMathBase.h">
       <Filter>cocos\math</Filter>
@@ -1434,9 +1440,6 @@
     <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extension_auto.hpp">
       <Filter>libquick\lua_bindings\auto</Filter>
     </ClInclude>
-    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extra_auto.hpp">
-      <Filter>libquick\lua_bindings\auto</Filter>
-    </ClInclude>
     <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_physics_auto.hpp">
       <Filter>libquick\lua_bindings\auto</Filter>
     </ClInclude>
@@ -1467,13 +1470,7 @@
     <ClInclude Include="..\lua_bindings\manual\Cocos2dxLuaLoader.h">
       <Filter>libquick\lua_bindings\manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_deprecated.h">
-      <Filter>libquick\lua_bindings\manual</Filter>
-    </ClInclude>
     <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_extension_manual.h">
-      <Filter>libquick\lua_bindings\manual</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_external_extra_manual.h">
       <Filter>libquick\lua_bindings\manual</Filter>
     </ClInclude>
     <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_manual.hpp">
@@ -1638,6 +1635,351 @@
     <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.h">
       <Filter>extensions\GUI\CCEditBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\cocos\2d\CCLabelBMFont.h">
+      <Filter>cocos\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProjectConfig\ProjectConfig.h">
+      <Filter>libquick\ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\3d\CCBundleReader.h">
+      <Filter>cocos\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\base\CCUserDefault.h">
+      <Filter>cocos\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\ConfigParser.h">
+      <Filter>libquick\codeide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\VisibleRect.h">
+      <Filter>libquick\codeide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\runtime\Protos.pb.h">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\runtime\ResData.h">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\runtime\Runtime.h">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\config.h">
+      <Filter>libquick\codeide\protobuf-lite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\extension_set.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\generated_message_util.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\message_lite.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\repeated_field.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\wire_format_lite.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\wire_format_lite_inl.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\coded_stream_inl.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream_impl.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\coded_stream.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_gcc.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\common.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\hash.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\map-util.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\once.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\platform_macros.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\stl_util.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\stringprintf.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\template_util.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\type_traits.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_arm_gcc.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_atomicword_compat.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_generic_gcc.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_macosx.h">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_studio_auto.hpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDisplayManager.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCProcessBase.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCSkin.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCSpriteFrameCacheHelper.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCTransformHelp.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCTween.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCUtilMath.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CocoLoader.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\DictionaryHelper.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCArmature.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureAnimation.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureDataManager.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureDefine.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCBatchNode.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCBone.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCColliderDetector.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDataReaderHelper.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDatas.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDecorativeDisplay.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDisplayFactory.h">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_coco_studio_manual.hpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extension_filter_auto.hpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\cocos2dFilters.h">
+      <Filter>libquick\extra\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCBlurFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCBrightnessFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCContrastFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCCustomFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCDropShadowFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCExposureFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCGammaFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCGrayFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCHazeFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCHueFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCMaskFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCRGBFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCSaturationFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCSepiaFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCSharpenFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\filters\CCTestFilter.h">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\nodes\CCFilteredSprite.h">
+      <Filter>libquick\extra\filters\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_blur_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_brightness_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_colorramp_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_contrast_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_drop_shadow_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_drop_shadow_vert.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_emboss_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_embossmov_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_exposure_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gamma_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gaussian_blur_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gaussian_hblur_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gaussian_vblur_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_grass_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gray_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_haze_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_hblur_vert.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_hue_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_motion_blur_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_motion_blur_vert.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_rgb_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_saturation_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_sepia_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_sharpen_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_sharpen_vert.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_test_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_test_vert.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_vblur_vert.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_zoom_blur_frag.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShaders.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\filters\shaders\FilterShaders.h">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\luabinding\HelperFunc_luabinding.h">
+      <Filter>libquick\extra\luabinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\native\CCAlertViewDelegate.h">
+      <Filter>libquick\extra\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\native\CCNative.h">
+      <Filter>libquick\extra\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extra\luabinding\cocos2dx_extra_luabinding.h">
+      <Filter>libquick\extra\luabinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\GUI\CCTextField\UITextField.h">
+      <Filter>extensions\GUI\CCTextField</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\cocos\2d\CCActionManager.cpp">
@@ -1715,9 +2057,6 @@
     <ClCompile Include="..\..\..\cocos\2d\CCLabelAtlas.cpp">
       <Filter>cocos\2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\cocos\2d\CCLabelBMFont.cpp">
-      <Filter>cocos\2d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\cocos\2d\CCLabelTextFormatter.cpp">
       <Filter>cocos\2d</Filter>
     </ClCompile>
@@ -1725,12 +2064,6 @@
       <Filter>cocos\2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\2d\CCLayer.cpp">
-      <Filter>cocos\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\2d\CCMenu.cpp">
-      <Filter>cocos\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\2d\CCMenuItem.cpp">
       <Filter>cocos\2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\2d\CCMotionStreak.cpp">
@@ -1877,9 +2210,6 @@
     <ClCompile Include="..\..\..\cocos\base\CCData.cpp">
       <Filter>cocos\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\cocos\base\CCDataVisitor.cpp">
-      <Filter>cocos\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\cocos\base\CCDirector.cpp">
       <Filter>cocos\base</Filter>
     </ClCompile>
@@ -1955,12 +2285,6 @@
     <ClCompile Include="..\..\..\cocos\base\ccTypes.cpp">
       <Filter>cocos\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\cocos\base\CCUserDefault.cpp">
-      <Filter>cocos\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\base\CCUserDefaultAndroid.cpp">
-      <Filter>cocos\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\cocos\base\ccUTF8.cpp">
       <Filter>cocos\base</Filter>
     </ClCompile>
@@ -1990,24 +2314,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\base\base64.cpp">
       <Filter>cocos\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\deprecated\CCDeprecated.cpp">
-      <Filter>cocos\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\deprecated\CCDictionary.cpp">
-      <Filter>cocos\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\deprecated\CCNotificationCenter.cpp">
-      <Filter>cocos\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\deprecated\CCSet.cpp">
-      <Filter>cocos\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\deprecated\CCString.cpp">
-      <Filter>cocos\deprecated</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\cocos\deprecated\CCArray.cpp">
-      <Filter>cocos\deprecated</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\cocos\math\CCVertex.cpp">
       <Filter>cocos\math</Filter>
@@ -2282,9 +2588,6 @@
     <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extension_auto.cpp">
       <Filter>libquick\lua_bindings\auto</Filter>
     </ClCompile>
-    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extra_auto.cpp">
-      <Filter>libquick\lua_bindings\auto</Filter>
-    </ClCompile>
     <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_physics_auto.cpp">
       <Filter>libquick\lua_bindings\auto</Filter>
     </ClCompile>
@@ -2306,13 +2609,7 @@
     <ClCompile Include="..\lua_bindings\manual\Cocos2dxLuaLoader.cpp">
       <Filter>libquick\lua_bindings\manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_deprecated.cpp">
-      <Filter>libquick\lua_bindings\manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_extension_manual.cpp">
-      <Filter>libquick\lua_bindings\manual</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_external_extra_manual.cpp">
       <Filter>libquick\lua_bindings\manual</Filter>
     </ClCompile>
     <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_manual.cpp">
@@ -2474,13 +2771,226 @@
     <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.cpp">
       <Filter>extensions\GUI\CCEditBox</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\cocos\2d\CCLabelBMFont.cpp">
+      <Filter>cocos\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProjectConfig\ProjectConfig.cpp">
+      <Filter>libquick\ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\3d\CCBundleReader.cpp">
+      <Filter>cocos\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\base\CCUserDefault.cpp">
+      <Filter>cocos\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\ConfigParser.cpp">
+      <Filter>libquick\codeide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\VisibleRect.cpp">
+      <Filter>libquick\codeide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\runtime\PlayDisable_png.cpp">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\runtime\PlayEnable_png.cpp">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\runtime\Portrait_png.cpp">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\runtime\Protos.pb.cc">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\runtime\Runtime.cpp">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\runtime\Shine_png.cpp">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\runtime\Landscape_png.cpp">
+      <Filter>libquick\codeide\runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\extension_set.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\generated_message_util.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\message_lite.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\repeated_field.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\wire_format_lite.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\io\coded_stream.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\common.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\once.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\stringprintf.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_gcc.cc">
+      <Filter>libquick\codeide\protobuf-lite\google\protobuf\stubs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codeide\platform\win\Runtime_win32.cpp">
+      <Filter>libquick\codeide\platform\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_studio_auto.cpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDisplayManager.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCProcessBase.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCSkin.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCSpriteFrameCacheHelper.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCTransformHelp.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCTween.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCUtilMath.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CocoLoader.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\DictionaryHelper.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCArmature.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureAnimation.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureDataManager.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureDefine.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCBone.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCColliderDetector.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDataReaderHelper.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDatas.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDecorativeDisplay.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDisplayFactory.cpp">
+      <Filter>cocos\editor-support\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_coco_studio_manual.cpp">
+      <Filter>libquick\lua_bindings\manual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extension_filter_auto.cpp">
+      <Filter>libquick\lua_bindings\auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCBlurFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCBrightnessFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCContrastFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCCustomFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCDropShadowFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCExposureFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCGammaFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCGrayFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCHazeFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCHueFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCMaskFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCRGBFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCSaturationFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCSepiaFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCSharpenFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\filters\CCTestFilter.cpp">
+      <Filter>libquick\extra\filters\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\nodes\CCFilteredSprite.cpp">
+      <Filter>libquick\extra\filters\nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\shaders\ccFilterShaders.cpp">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\filters\shaders\FilterShaders.cpp">
+      <Filter>libquick\extra\filters\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\luabinding\HelperFunc_luabinding.cpp">
+      <Filter>libquick\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\extra\luabinding\cocos2dx_extra_luabinding.cpp">
+      <Filter>libquick\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\GUI\CCTextField\UITextField.cpp">
+      <Filter>extensions\GUI\CCTextField</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\cocos\3d\CCAnimationCurve.inl">
       <Filter>cocos\3d</Filter>
-    </None>
-    <None Include="..\..\..\cocos\base\CCUserDefault.mm">
-      <Filter>cocos\base</Filter>
     </None>
     <None Include="..\..\..\cocos\math\Mat4.inl">
       <Filter>cocos\math</Filter>

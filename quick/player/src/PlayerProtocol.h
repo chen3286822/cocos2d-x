@@ -3,28 +3,17 @@
 #define __PLAYER_PROTOCOL_H_
 
 #include "PlayerMacros.h"
+#include "PlayerSettings.h"
+
 #include "PlayerFileDialogServiceProtocol.h"
 #include "PlayerMessageBoxServiceProtocol.h"
 #include "PlayerMenuServiceProtocol.h"
 #include "PlayerEditBoxServiceProtocol.h"
+#include "PlayerTaskServiceProtocol.h"
 
-#include "PlayerUtils.h"
+#include "ProjectConfig/ProjectConfig.h"
 
 PLAYER_NS_BEGIN
-
-struct PlayerSettings
-{
-public:
-    PlayerSettings()
-    : openLastProject(false), offsetX(0), offsetY(0), windowWidth(960), windowHeight(640)
-    {}
-    
-    bool openLastProject;
-    long offsetX;
-    long offsetY;
-    long windowWidth;
-    long windowHeight;
-};
 
 class PlayerProtocol
 {
@@ -34,30 +23,31 @@ public:
     static PlayerProtocol *getInstance();
     static void purgeInstance();
 
-    void setPlayerSettings(PlayerSettings &settings);
-    PlayerSettings &getPlayerSettings() ;
-    
-    virtual PlayerFileDialogServiceProtocol *getFileDialogService() = 0; // impl in platform related source files
-    
-    virtual PlayerMessageBoxServiceProtocol *getMessageBoxService() = 0;
-    
-    virtual PlayerMenuServiceProtocol       *getMenuService() = 0;
-    
-    virtual PlayerEditBoxServiceProtocol    *getEditBoxService() = 0;
+    void setPlayerSettings(const PlayerSettings &settings);
+    PlayerSettings getPlayerSettings() const;
 
+    virtual PlayerFileDialogServiceProtocol *getFileDialogService() = 0; // implemented in platform related source files
+    virtual PlayerMessageBoxServiceProtocol *getMessageBoxService() = 0;
+    virtual PlayerMenuServiceProtocol *getMenuService() = 0;
+    virtual PlayerEditBoxServiceProtocol *getEditBoxService() = 0;
+    virtual PlayerTaskServiceProtocol *getTaskService() = 0;
+
+    // player function
+
+    virtual void quit() = 0;
+    virtual void relaunch() = 0;
+    virtual void openNewPlayer() = 0;
+    virtual void openNewPlayerWithProjectConfig(const ProjectConfig &config) = 0;
+    virtual void openProjectWithProjectConfig(const ProjectConfig &config) = 0;
+    virtual void trackEvent(const char* eventName) = 0;
+    
 protected:
     PlayerProtocol(); // avoid create instance from outside
-    static void setInstance(PlayerProtocol *instance); // call from platform related class constructor
 
-    PlayerFileDialogServiceProtocol *m_fileDialogService;
-    PlayerMessageBoxServiceProtocol *m_messageBoxService;
-    PlayerMenuServiceProtocol       *m_menuService;
-    PlayerEditBoxServiceProtocol    *m_editBoxService;
+    PlayerSettings _settings;
 
 private:
-    static PlayerProtocol *s_instance;
-    
-    PlayerSettings m_settings;
+    static PlayerProtocol *_instance;
 };
 
 PLAYER_NS_END

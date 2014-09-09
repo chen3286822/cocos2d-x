@@ -56,6 +56,17 @@ void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err)
             else
                 CCLOG("%s\n     value is '%s'; '%s' expected.\n",msg+2,provided,expected);
         }
+
+        lua_getglobal(L, "__G__TRACKBACK__");                         /* L: ... func arg1 arg2 ... G */
+        if (!lua_isfunction(L, -1))
+        {
+            lua_pop(L, 1);                                            /* L: ... func arg1 arg2 ... */
+        }
+        else
+        {
+            lua_pushstring(L, "luaval_to_native_err()");
+            lua_call(L, 1, 0);
+        }
     }
 }
 #endif
@@ -415,6 +426,7 @@ bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue)
     return ok;
 }
 
+#if CC_USE_PHYSICS
 bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue)
 {
     if (NULL == L || NULL == outValue)
@@ -451,6 +463,7 @@ bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue)
     }
     return ok;
 }
+#endif //CC_USE_PHYSICS
 
 bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue)
 {
@@ -1677,6 +1690,7 @@ void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec3)
     lua_rawset(L, -3);
 }
 
+#if CC_USE_PHYSICS
 void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm)
 {
     if (nullptr  == L)
@@ -1753,6 +1767,7 @@ void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data)
     lua_pushnumber(L, data->POINT_MAX);
     lua_rawset(L, -3);
 }
+#endif //CC_USE_PHYSICS
 
 void size_to_luaval(lua_State* L,const Size& sz)
 {

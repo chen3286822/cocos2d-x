@@ -4,23 +4,47 @@
 
 #include "PlayerProtocol.h"
 
+#include "PlayerEditBoxServiceMac.h"
+#include "PlayerFileDialogServiceMac.h"
+#include "PlayerMenuServiceMac.h"
+#include "PlayerMessageBoxServiceMac.h"
+#include "PlayerTaskServiceMac.h"
+
+#include "PlayerLuaCore.h"
+#include "PlayerUtils.h"
+
+#include "ProjectConfig/ProjectConfig.h"
 PLAYER_NS_BEGIN
 
 class PlayerMac : public PlayerProtocol
 {
 public:
-    PlayerMac();
+    static PlayerMac *create();
     virtual ~PlayerMac();
 
     virtual PlayerFileDialogServiceProtocol *getFileDialogService();
-
     virtual PlayerMessageBoxServiceProtocol *getMessageBoxService();
+    virtual PlayerMenuServiceProtocol *getMenuService();
+    virtual PlayerEditBoxServiceProtocol *getEditBoxService();
+    virtual PlayerTaskServiceProtocol *getTaskService();
+
+    void quit();
+    void relaunch();
+    void openNewPlayer();
+    void openNewPlayerWithProjectConfig(const ProjectConfig& config);
+    void openProjectWithProjectConfig(const ProjectConfig& config);
+    void trackEvent(const char* eventName);
     
-    virtual PlayerMenuServiceProtocol       *getMenuService();
-    
-    virtual PlayerEditBoxServiceProtocol    *getEditBoxService();
+    void setController(id controller);
 protected:
-    
+    PlayerMac();
+
+    PlayerMenuServiceMac       *_menuService;
+    PlayerMessageBoxServiceMac *_messageBoxService;
+    PlayerFileDialogServiceMac *_fileDialogService;
+    PlayerEditBoxServiceMac    *_editBoxService;
+    PlayerTaskServiceMac       *_taskService;
+    id _appController;
 };
 
 PLAYER_NS_END

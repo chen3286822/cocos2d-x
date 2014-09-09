@@ -1,69 +1,64 @@
-//
-//  PlayerMenuServiceProtocol.h
-//  quick-x-player
-//
 
 #ifndef __PLAYER_MENU_SERVICE_PROTOCOL_H
 #define __PLAYER_MENU_SERVICE_PROTOCOL_H
 
+#include <string>
+
+#include "cocos2d.h"
 #include "PlayerMacros.h"
 #include "PlayerServiceProtocol.h"
 
-#include <string>
-
 PLAYER_NS_BEGIN
-
-#define MAX_INT ((unsigned)(-1))>>1
-#define MIN_INT ~MAX_INT
 
 #define kPlayerSuperModifyKey "super"
 #define kPlayerShiftModifyKey "shift"
 #define kPlayerCtrlModifyKey  "ctrl"
 #define kPlayerAltModifyKey   "alt"
 
-
-class PlayerMenuItem
+class PlayerMenuItem : public cocos2d::Ref
 {
 public:
-    PlayerMenuItem():itemId(""), scriptHandlerId(0),isChecked(false),isEnabled(true), shortcut("")
-    {
-    }
-    
-    std::string itemId;     // 该菜单项id
-//    int index;              // 该菜单项在同级菜单中的索引（从 0 开始的位置）
-    std::string title;      // 菜单名称
-    bool isGroup;           // 是否是菜单组
-    bool isEnabled;         // 是否可以点击
-    bool isChecked;         // 是否设置为已选中状态（如果是菜单组，则忽略该设置）
-    std::string shortcut;   // 键盘快捷键（如果是菜单组，则忽略该设置）
-    int scriptHandlerId;    // 事件回调的 Lua 脚本 id
+    virtual ~PlayerMenuItem();
+
+    std::string getMenuId() const;
+    std::string getTitle() const;
+    int getOrder() const;
+    bool isGroup() const;
+    bool isEnabled() const;
+    bool isChecked() const;
+    std::string getShortcut() const;
+
+    virtual void setTitle(const std::string &title) = 0;
+    virtual void setEnabled(bool enabled) = 0;
+    virtual void setChecked(bool checked) = 0;
+    virtual void setShortcut(const std::string &shortcut) = 0;
+
+protected:
+    PlayerMenuItem();
+
+    std::string _menuId;
+    std::string _title;
+    int _order;
+    bool _isGroup;
+    bool _isEnabled;
+    bool _isChecked; // ignored when isGroup = true
+    std::string _shortcut; // ignored when isGroup = true
 };
 
 class PlayerMenuServiceProtocol : public PlayerServiceProtocol
 {
 public:
-    // 添加一个菜单项
-    //
-    // 如果 @parentIndex < = 0不存在, 则添加为顶级菜单
-    //
-    // @param item 菜单项定义
-    // @param parentIndex 父级菜单对象
-    virtual void addItem(const PlayerMenuItem &item,
-                         std::string parentId = std::string(),
-                         int index = MAX_INT) = 0;
-    
-    
-    // 修改一个菜单项
-    //
-    // @param item 菜单项
-    virtual void modifyItem(const PlayerMenuItem &item) = 0;
-    
-    
-    // 删除一个菜单项
-    //
-    // @param item 菜单项
-    virtual void deleteItem(const PlayerMenuItem &item) = 0;
-    
+    static const int MAX_ORDER = 9999;
+
+    virtual PlayerMenuItem *addItem(const std::string &menuId,
+                                    const std::string &title,
+                                    const std::string &parentId,
+                                    int order = MAX_ORDER) = 0;
+    virtual PlayerMenuItem *addItem(const std::string &menuId,
+                                    const std::string &title) = 0;
+    virtual PlayerMenuItem *getItem(const std::string &menuId) = 0;
+    virtual bool removeItem(const std::string &menuId) = 0;
+    virtual void setMenuBarEnabled(bool enabled) = 0;
 };
 
 PLAYER_NS_END

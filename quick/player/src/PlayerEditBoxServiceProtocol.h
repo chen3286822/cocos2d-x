@@ -1,40 +1,33 @@
-//
-//  PlayerEditBoxServiceProtocol.h
-//  player
-//
 
-#ifndef player_PlayerEditBoxServiceProtocol_h
-#define player_PlayerEditBoxServiceProtocol_h
-
-#include "PlayerMacros.h"
-#include "PlayerServiceProtocol.h"
+#ifndef __PLAYER_EDITBOX_SERVICE_PROTOCOL_H_
+#define __PLAYER_EDITBOX_SERVICE_PROTOCOL_H_
 
 #include <string>
+
+#include "cocos2d.h"
+#include "PlayerMacros.h"
+#include "PlayerServiceProtocol.h"
 
 PLAYER_NS_BEGIN
 
 class PlayerEditBoxServiceProtocol : public PlayerServiceProtocol
 {
 public:
-    PlayerEditBoxServiceProtocol() {}
-    virtual ~PlayerEditBoxServiceProtocol() {}
-    
-    virtual void setPosition(int x, int y) = 0;
-    virtual void setSize(int width, int height) = 0;
-    virtual void setRect(int x, int y, int width, int height) = 0;
-    virtual void setText(std::string text) = 0;
-    virtual void setFont(const char* pFontName, int fontSize) = 0;
-    // @r / @g / @b [0,255]
-    virtual void setFontColor(int r, int g, int b) = 0;
-    
-    // hide editbox
+    virtual void showSingleLineEditBox(const cocos2d::Rect &rect) = 0;
+    virtual void showMultiLineEditBox(const cocos2d::Rect &rect) = 0;
     virtual void hide() = 0;
-    virtual void show() = 0;
+
+    virtual void setText(const std::string &text) = 0;
+    virtual void setFont(const std::string &name, int size) = 0;
+    virtual void setFontColor(const cocos2d::Color3B &color) = 0;
     
-    //
-//    void setFilter(int filter);
+    void registerHandler(int handler)   { _handler = handler; }
+    int getHandler()                    { return _handler; }
+    
+protected:
+    int _handler;
 };
 
 PLAYER_NS_END
 
-#endif
+#endif // __PLAYER_EDITBOX_SERVICE_PROTOCOL_H_

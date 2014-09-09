@@ -6,30 +6,30 @@ LOCAL_MODULE    := cocos_extension_static
 LOCAL_MODULE_FILENAME := libextension
 
 LOCAL_SRC_FILES := \
-GUI/CCControlExtension/CCControl.cpp \
-GUI/CCControlExtension/CCControlButton.cpp \
-GUI/CCControlExtension/CCControlUtils.cpp \
-GUI/CCControlExtension/CCInvocation.cpp \
-GUI/CCControlExtension/CCScale9Sprite.cpp \
-GUI/CCEditBox/CCEditBox.cpp \
-GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
+$(LOCAL_PATH)/GUI/CCControlExtension/CCControl.cpp \
+$(LOCAL_PATH)/GUI/CCControlExtension/CCControlButton.cpp \
+$(LOCAL_PATH)/GUI/CCControlExtension/CCControlUtils.cpp \
+$(LOCAL_PATH)/GUI/CCControlExtension/CCInvocation.cpp \
+$(LOCAL_PATH)/GUI/CCControlExtension/CCScale9Sprite.cpp \
+$(LOCAL_PATH)/GUI/CCEditBox/CCEditBox.cpp \
+$(LOCAL_PATH)/GUI/CCEditBox/CCEditBoxImplAndroid.cpp \
+$(LOCAL_PATH)/GUI/CCTextField/UITextField.cpp \
 
-#GUI/CCEditBox/CCEditBoxImplNone.cpp \
-#GUI/CCEditBox/CCEditBoxImplWin.cpp \
+
+#$(LOCAL_PATH)/GUI/CCEditBox/CCEditBoxImplNone.cpp \
+#$(LOCAL_PATH)/GUI/CCEditBox/CCEditBoxImplWin.cpp \
 
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_curl_static
-#LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
-LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
 
 LOCAL_CXXFLAGS += -fexceptions
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
 				    $(QUICK_V3_LIB)
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+						   $(LOCAL_PATH)/.. \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
                            $(LOCAL_PATH)/GUI/CCScrollView \
 						   $(QUICK_V3_LIB)
@@ -38,7 +38,3 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,.)
 $(call import-module,audio/android)
-$(call import-module,curl/prebuilt/android)
-#$(call import-module,Box2D)
-$(call import-module,websockets/prebuilt/android)
-

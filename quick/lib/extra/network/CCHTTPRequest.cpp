@@ -1,6 +1,7 @@
 #include "network/CCHTTPRequest.h"
 #include <stdio.h>
 #include <iostream>
+#include <thread>
 
 #if CC_LUA_ENGINE_ENABLED > 0
 extern "C" {
@@ -10,8 +11,6 @@ extern "C" {
 #endif
 #include <sstream>
 
-
-using namespace cocos2d;
 
 NS_CC_EXTRA_BEGIN
 
@@ -188,21 +187,31 @@ bool HTTPRequest::start(void)
     curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, this);
     curl_easy_setopt(m_curl, CURLOPT_HEADERFUNCTION, writeHeaderCURL);
     curl_easy_setopt(m_curl, CURLOPT_WRITEHEADER, this);
+    curl_easy_setopt(m_curl, CURLOPT_NOPROGRESS, false);
     curl_easy_setopt(m_curl, CURLOPT_PROGRESSFUNCTION, progressCURL);
     curl_easy_setopt(m_curl, CURLOPT_PROGRESSDATA, this);
     curl_easy_setopt(m_curl, CURLOPT_COOKIEFILE, "");
 
 #ifdef _WINDOWS_
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	std::thread worker(requestCURL, this);
+	worker.detach();
+
+#else
     CreateThread(NULL,          // default security attributes
                  0,             // use default stack size
                  requestCURL,   // thread function name
                  this,          // argument to thread function
                  0,             // use default creation flags
                  NULL);
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+
 #else
     pthread_create(&m_thread, NULL, requestCURL, this);
     pthread_detach(m_thread);
 #endif
+
     
     Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
     // CCLOG("HTTPRequest[0x%04x] - request start", s_id);
@@ -319,7 +328,27 @@ void HTTPRequest::checkCURLState(float dt)
 
 void HTTPRequest::update(float dt)
 {
-    if (m_state == kCCHTTPRequestStateInProgress) return;
+    if (m_state == kCCHTTPRequestStateInProgress)
+    {
+#if CC_LUA_ENGINE_ENABLED > 0
+        if (m_listener)
+        {
+            LuaValueDict dict;
+            
+            dict["name"] = LuaValue::stringValue("progress");
+            dict["total"] = LuaValue::intValue((int)m_dltotal);
+            dict["dltotal"] = LuaValue::intValue((int)m_dlnow);
+            dict["request"] = LuaValue::ccobjectValue(this, "HTTPRequest");
+            
+            LuaStack *stack = LuaEngine::getInstance()->getLuaStack();
+            stack->clean();
+            stack->pushLuaValueDict(dict);
+            stack->executeFunctionByHandler(m_listener, 1);
+        }
+#endif
+        return;
+    }
+    
     Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
     if (m_curlState != kCCHTTPRequestCURLStateIdle)
     {
@@ -465,6 +494,11 @@ size_t HTTPRequest::onWriteHeader(void *buffer, size_t bytes)
 
 int HTTPRequest::onProgress(double dltotal, double dlnow, double ultotal, double ulnow)
 {
+    m_dltotal = dltotal;
+    m_dlnow = dlnow;
+    m_ultotal = ultotal;
+    m_ulnow = ulnow;
+    
     return m_state == kCCHTTPRequestStateCancelled ? 1: 0;
 }
 

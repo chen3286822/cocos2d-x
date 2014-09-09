@@ -1,77 +1,65 @@
-//
-//  AppDelegate.m
-//  quick-x-player
-//
 
 #import "AppController.h"
 
-#import "CreateNewProjectDialogController.h"
-#import "ProjectConfigDialogController.h"
-#import "PlayerPreferencesDialogController.h"
-#import "ConsoleWindowController.h"
-
 #include "AppDelegate.h"
-#include "AppControllerBridge.h"
 #include "glfw3.h"
 #include "glfw3native.h"
 
 #include "cocos2d.h"
-#include "native/CCNative.h"
 #include "CCLuaEngine.h"
-USING_NS_CC;
-USING_NS_CC_EXTRA;
 
-// player interface
-#include "player_tolua.h"
-#include "PlayerProtocol.h"
+#include "PlayerMac.h"
+
+USING_NS_CC;
 
 @implementation AppController
 
+std::string getCurAppPath(void)
+{
+    return [[[NSBundle mainBundle] bundlePath] UTF8String];
+}
+
 - (void) dealloc
 {
-    if (buildTask)
+    if (_buildTask)
     {
-        [buildTask interrupt];
-        buildTask = nil;
+        [_buildTask interrupt];
+        _buildTask = nil;
     }
     [super dealloc];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    waitForRestart = NO;
-    isAlwaysOnTop = NO;
-    isMaximized = NO;
-    hasPopupDialog = NO;
-    debugLogFile = 0;
+    auto player = player::PlayerMac::create();
+    player->setController(self);
 
-    buildTask = nil;
-    isBuildingFinished = YES;
-    
-    // load QUICK_COCOS2DX_ROOT from ~/.QUICK_COCOS2DX_ROOT
+    _isAlwaysOnTop = NO;
+    _debugLogFile = 0;
+
+    _buildTask = nil;
+    _isBuildingFinished = YES;
+
+    // load QUICK_V3_ROOT from ~/.QUICK_V3_ROOT
     NSMutableString *path = [NSMutableString stringWithString:NSHomeDirectory()];
     [path appendString:@"/.QUICK_V3_ROOT"];
-    NSError *error = nil;
+    NSError *error = [[[NSError alloc] init] autorelease];
     NSString *env = [NSString stringWithContentsOfFile:path
                                               encoding:NSUTF8StringEncoding
                                                  error:&error];
-    if (error || env.length == 0)
+    if ([error code] || env.length == 0)
     {
-        [self showAlertWithoutSheet:@"Please run \"setup.app\", set quick-cocos2d-x root path." withTitle:@"quick player error"];
+        [self showAlertWithoutSheet:@"Please run \"setup_mac.sh\", set quick-cocos2d-x root path."
+                          withTitle:@"quick player error"];
         [[NSApplication sharedApplication] terminate:self];
     }
-    
+
     env = [env stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    env = [NSString stringWithFormat:@"%@/quick", env];
-    SimulatorConfig::sharedDefaults()->setQuickCocos2dxRootPath([env cStringUsingEncoding:NSUTF8StringEncoding]);
-    
-    [self loadLuaConfig];
-    [self updateProjectConfigFromCommandLineArgs:&projectConfig];
+    SimulatorConfig::getInstance()->setQuickCocos2dxRootPath([env cStringUsingEncoding:NSUTF8StringEncoding]);
+
+    [self updateProjectFromCommandLineArgs:&_project];
     [self createWindowAndGLView];
-    [self initUI];
-    [self updateOpenRect];
-    [self updateUI];
-    [self loadLuaPlayerCore];
+    [self registerEventsHandler];
     [self startup];
 }
 
@@ -79,9 +67,9 @@ USING_NS_CC_EXTRA;
 {
     cocos2d::EventCustom event("APP.EVENT");
     std::stringstream buf;
-    
+
     buf << "{\"name\":\"focusOut\"}";
-    
+
     event.setDataString(buf.str());
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
@@ -90,9 +78,9 @@ USING_NS_CC_EXTRA;
 {
     cocos2d::EventCustom event("APP.EVENT");
     std::stringstream buf;
-    
+
     buf << "{\"name\":\"focusIn\"}";
-    
+
     event.setDataString(buf.str());
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
@@ -109,173 +97,7 @@ USING_NS_CC_EXTRA;
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
 {
-    LuaEngine::getInstance()->getLuaStack()->executeString("cc.player.exit()");
-    return NO;
-}
-
-- (void) updateOpenRect
-{
-    NSMutableArray *recents = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] arrayForKey:@"recents"]];
-    
-    NSString *welcomeTitle = [NSString stringWithFormat:@"%splayer/welcome/", SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath().c_str()];
-    
-    for (NSInteger i = [recents count] - 1; i >= 0; --i)
-    {
-        id recentItem = [recents objectAtIndex:i];
-        if (![[recentItem class] isSubclassOfClass:[NSDictionary class]])
-        {
-            [recents removeObjectAtIndex:i];
-            continue;
-        }
-        
-        NSString *title = [recentItem objectForKey:@"title"];
-        if (!title || [title length] == 0 || [welcomeTitle compare:title] == NSOrderedSame /*|| !CCFileUtils::sharedFileUtils()->isDirectoryExist([title cStringUsingEncoding:NSUTF8StringEncoding])*/)
-        {
-            [recents removeObjectAtIndex:i];
-        }
-    }
-    
-    NSString *title = [NSString stringWithCString:projectConfig.getProjectDir().c_str() encoding:NSUTF8StringEncoding];
-    if ([title length] > 0 && [welcomeTitle compare:title] != NSOrderedSame)
-    {
-        for (NSInteger i = [recents count] - 1; i >= 0; --i)
-        {
-            id recentItem = [recents objectAtIndex:i];
-            if ([title compare:[recentItem objectForKey:@"title"]] == NSOrderedSame)
-            {
-                [recents removeObjectAtIndex:i];
-            }
-        }
-        
-        NSMutableArray *args = [self makeCommandLineArgsFromProjectConfig:kProjectConfigOpenRecent];
-        NSDictionary *item = [NSDictionary dictionaryWithObjectsAndKeys:title, @"title", args, @"args", nil];
-        [recents insertObject:item atIndex:0];
-    }
-    [[NSUserDefaults standardUserDefaults] setObject:recents forKey:@"recents"];
-}
-
-- (void) initUI
-{
-    NSMenu *submenu = [[[window menu] itemWithTitle:@"Screen"] submenu];
-    
-    SimulatorConfig *config = SimulatorConfig::sharedDefaults();
-    int current = config->checkScreenSize(projectConfig.getFrameSize());
-    for (int i = config->getScreenSizeCount() - 1; i >= 0; --i)
-    {
-        SimulatorScreenSize size = config->getScreenSize(i);
-        NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithCString:size.title.c_str() encoding:NSUTF8StringEncoding]
-                                                       action:@selector(onScreenChangeFrameSize:)
-                                                keyEquivalent:@""] autorelease];
-        [item setTag:i];
-        
-        if (i == current)
-        {
-            [item setState:NSOnState];
-        }
-        [submenu insertItem:item atIndex:0];
-    }
-    
-    NSArray *recents = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recents"];
-    submenu = [[[[[window menu] itemWithTitle:@"File"] submenu] itemWithTitle:@"Open Recent"] submenu];
-    for (NSInteger i = [recents count] - 1; i >= 0; --i)
-    {
-        NSDictionary *recentItem = [recents objectAtIndex:i];
-        NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[recentItem objectForKey:@"title"]
-                                                       action:@selector(onFileOpenRecent:)
-                                                keyEquivalent:@""] autorelease];
-        [submenu insertItem:item atIndex:0];
-    }
-}
-
-- (void) updateUI
-{
-    NSMenu *menuPlayer = [[[window menu] itemWithTitle:@"Player"] submenu];
-    NSMenuItem *itemWriteDebugLogToFile = [menuPlayer itemWithTitle:@"Write Debug Log to File"];
-    [itemWriteDebugLogToFile setState:projectConfig.isWriteDebugLogToFile() ? NSOnState : NSOffState];
-    
-    NSMenu *menuScreen = [[[window menu] itemWithTitle:@"Screen"] submenu];
-    NSMenuItem *itemPortait = [menuScreen itemWithTitle:@"Portait"];
-    NSMenuItem *itemLandscape = [menuScreen itemWithTitle:@"Landscape"];
-    if (projectConfig.isLandscapeFrame())
-    {
-        [itemPortait setState:NSOffState];
-        [itemLandscape setState:NSOnState];
-    }
-    else
-    {
-        [itemPortait setState:NSOnState];
-        [itemLandscape setState:NSOffState];
-    }
-    
-    int scale = projectConfig.getFrameScale() * 100;
-    
-    NSMenuItem *itemZoom100 = [menuScreen itemWithTitle:@"Actual (100%)"];
-    NSMenuItem *itemZoom75 = [menuScreen itemWithTitle:@"Zoom Out (75%)"];
-    NSMenuItem *itemZoom50 = [menuScreen itemWithTitle:@"Zoom Out (50%)"];
-    NSMenuItem *itemZoom25 = [menuScreen itemWithTitle:@"Zoom Out (25%)"];
-    [itemZoom100 setState:NSOffState];
-    [itemZoom75 setState:NSOffState];
-    [itemZoom50 setState:NSOffState];
-    [itemZoom25 setState:NSOffState];
-    if (scale == 100)
-    {
-        [itemZoom100 setState:NSOnState];
-    }
-    else if (scale == 75)
-    {
-        [itemZoom75 setState:NSOnState];
-    }
-    else if (scale == 50)
-    {
-        [itemZoom50 setState:NSOnState];
-    }
-    else if (scale == 25)
-    {
-        [itemZoom25 setState:NSOnState];
-    }
-    
-    NSArray *recents = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recents"];
-    NSMenu *menuRecents = [[[[[window menu] itemWithTitle:@"File"] submenu] itemWithTitle:@"Open Recent"] submenu];
-    while (true)
-    {
-        NSMenuItem *item = [menuRecents itemAtIndex:0];
-        if ([item isSeparatorItem]) break;
-        [menuRecents removeItemAtIndex:0];
-    }
-    
-    for (NSInteger i = [recents count] - 1; i >= 0; --i)
-    {
-        NSDictionary *recentItem = [recents objectAtIndex:i];
-        NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[recentItem objectForKey:@"title"]
-                                                       action:@selector(onFileOpenRecent:)
-                                                keyEquivalent:@""] autorelease];
-        [menuRecents insertItem:item atIndex:0];
-    }
-    
-    [window setTitle:[NSString stringWithFormat:@"quick-x-player (%0.0f%%)", projectConfig.getFrameScale() * 100]];
-}
-
-
-- (void) showModelSheet
-{
-    hasPopupDialog = YES;
-    if (app)
-    {
-        Director::getInstance()->pause();
-        CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-        CocosDenshion::SimpleAudioEngine::getInstance()->pauseAllEffects();
-    }
-}
-
-- (void) stopModelSheet
-{
-    hasPopupDialog = NO;
-    if (app)
-    {
-        Director::getInstance()->resume();
-        CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-        CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
-    }
+    return YES;
 }
 
 - (NSMutableArray*) makeCommandLineArgsFromProjectConfig
@@ -285,21 +107,34 @@ USING_NS_CC_EXTRA;
 
 - (NSMutableArray*) makeCommandLineArgsFromProjectConfig:(unsigned int)mask
 {
-    projectConfig.setWindowOffset(Vec2(window.frame.origin.x, window.frame.origin.y));
-    NSString *commandLine = [NSString stringWithCString:projectConfig.makeCommandLine(mask).c_str() encoding:NSUTF8StringEncoding];
+    _project.setWindowOffset(Vec2(_window.frame.origin.x, _window.frame.origin.y));
+    NSString *commandLine = [NSString stringWithCString:_project.makeCommandLine(mask).c_str()
+                                               encoding:NSUTF8StringEncoding];
     return [NSMutableArray arrayWithArray:[commandLine componentsSeparatedByString:@" "]];
 }
 
-- (void) updateProjectConfigFromCommandLineArgs:(ProjectConfig *)config
+- (void) updateProjectFromCommandLineArgs:(ProjectConfig*)config
 {
     NSArray *nsargs = [[NSProcessInfo processInfo] arguments];
-    vector<string> args;
-    for (int i = 0; i < [nsargs count]; ++i)
+    long n = [nsargs count];
+    if (n >= 2)
     {
-        args.push_back([[nsargs objectAtIndex:i] cStringUsingEncoding:NSUTF8StringEncoding]);
+        vector<string> args;
+        for (int i = 0; i < [nsargs count]; ++i)
+        {
+            string arg = [[nsargs objectAtIndex:i] cStringUsingEncoding:NSUTF8StringEncoding];
+            if (arg.length()) args.push_back(arg);
+        }
+
+        if (args.size() && args.at(1).at(0) == '/')
+        {
+            // for Code IDE before RC2
+            config->setProjectDir(args.at(1));
+            config->setDebuggerType(kCCLuaDebuggerCodeIDE);
+        }
+        config->parseCommandLine(args);
     }
-    config->parseCommandLine(args);
-    
+
     if (config->getProjectDir().length() == 0)
     {
         config->resetToWelcome();
@@ -319,9 +154,7 @@ USING_NS_CC_EXTRA;
 - (void) relaunch:(NSArray*)args
 {
     [self launch:args];
-    
-    LuaEngine::getInstance()->getLuaStack()->executeString("cc.player.exit()");
-//    [[NSApplication sharedApplication] terminate:self];
+    [[NSApplication sharedApplication] terminate:self];
 }
 
 - (void) relaunch
@@ -339,45 +172,43 @@ USING_NS_CC_EXTRA;
     [alert runModal];
 }
 
-- (void) showAlert:(NSString*)message withTitle:(NSString*)title
-{
-    
-    NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-	[alert addButtonWithTitle:@"OK"];
-	[alert setMessageText:message];
-	[alert setInformativeText:title];
-	[alert setAlertStyle:NSWarningAlertStyle];
-    
-	[alert beginSheetModalForWindow:window
-					  modalDelegate:self
-					 didEndSelector:nil
-						contextInfo:nil];
-}
-
 - (void) loadLuaConfig
 {
     LuaEngine* pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-    
-    tolua_player_luabinding_open(pEngine->getLuaStack()->getLuaState());
-    
+
+    luaopen_PlayerLuaCore(pEngine->getLuaStack()->getLuaState());
+
     NSMutableString *path = [NSMutableString stringWithString:NSHomeDirectory()];
     [path appendString:@"/"];
+
     
+    //
     // set user home dir
+    //
     lua_pushstring(pEngine->getLuaStack()->getLuaState(), path.UTF8String);
     lua_setglobal(pEngine->getLuaStack()->getLuaState(), "__USER_HOME__");
-    
-    [path appendString:@".quick_player.lua"];
-    
 
-    NSString *luaCorePath = [[NSBundle mainBundle] pathForResource:@"player" ofType:@"lua"];
-    pEngine->getLuaStack()->executeScriptFile(luaCorePath.UTF8String);
-    
-    player::PlayerSettings &settings = player::PlayerProtocol::getInstance()->getPlayerSettings();
 
-    projectConfig.setWindowOffset(Vec2(settings.offsetX, settings.offsetY));
-    projectConfig.setFrameSize(cocos2d::Size(settings.windowWidth, settings.windowHeight));
+    //
+    // ugly: Add the opening project to the "Open Recents" list
+    //
+    lua_pushstring(pEngine->getLuaStack()->getLuaState(), _project.getProjectDir().c_str());
+    lua_setglobal(pEngine->getLuaStack()->getLuaState(), "__PLAYER_OPEN_TITLE__");
+    
+    lua_pushstring(pEngine->getLuaStack()->getLuaState(), _project.makeCommandLine().c_str());
+    lua_setglobal(pEngine->getLuaStack()->getLuaState(), "__PLAYER_OPEN_COMMAND__");
+
+    //
+    // load player.lua file
+    //
+    string playerCoreFilePath = SimulatorConfig::getInstance()->getQuickCocos2dxRootPath() + "quick/player/src/player.lua";
+    pEngine->getLuaStack()->executeScriptFile(playerCoreFilePath.c_str());
+    
+    
+    // load setting
+//    const player::PlayerSettings &settings = player::PlayerProtocol::getInstance()->getPlayerSettings();
+//    _project.setWindowOffset(Vec2(settings.offsetX, settings.offsetY));
 }
 
 #pragma mark -
@@ -385,233 +216,204 @@ USING_NS_CC_EXTRA;
 
 - (void) createWindowAndGLView
 {
-    int width = projectConfig.getFrameSize().width;
-    int height = projectConfig.getFrameSize().height;
-    float scale = projectConfig.getFrameScale();
+    float screenScale = [[NSScreen mainScreen] backingScaleFactor];
     
-    eglView = GLView::createWithRect("quick-x-player", cocos2d::Rect(0, 0, width, height), scale, false);
-    Director::getInstance()->setOpenGLView(eglView);
-    
-    window = glfwGetCocoaWindow(eglView->getWindow());
-//    window.delegate = self;
-    [NSApp setDelegate: self];
-    
-    // set window parameters
-    [window center];
-    
-    if (projectConfig.getProjectDir().length())
+    // create opengl view
+    cocos2d::Size frameSize = _project.getFrameSize();
+    float frameScale = 1.0f;
+    if (_project.isRetinaDisplay())
     {
-        [self setZoom:projectConfig.getFrameScale()];
-        Vec2 pos = projectConfig.getWindowOffset();
+        frameSize.width *= screenScale;
+        frameSize.height *= screenScale;
+    }
+    else
+    {
+        frameScale = screenScale;
+    }
+
+    const cocos2d::Rect frameRect = cocos2d::Rect(0, 0, frameSize.width, frameSize.height);
+    GLView *eglView = GLView::createWithRect("player", frameRect, frameScale, _project.isResizeWindow());
+
+    auto director = Director::getInstance();
+    director->setOpenGLView(eglView);
+    director->setScreenScale(screenScale);
+    
+    _window = glfwGetCocoaWindow(eglView->getWindow());
+    [NSApp setDelegate: self];
+    [_window center];
+
+    if (_project.getProjectDir().length())
+    {
+        [self setZoom:_project.getFrameScale()];
+        Vec2 pos = _project.getWindowOffset();
         if (pos.x != 0 && pos.y != 0)
         {
-            [window setFrameOrigin:NSMakePoint(pos.x, pos.y)];
+            [_window setFrameOrigin:NSMakePoint(pos.x, pos.y)];
         }
     }
-    
-//    [window becomeFirstResponder];
-//    [window makeKeyAndOrderFront:self];
-//    [window setAcceptsMouseMovedEvents:NO];
 }
 
-- (void) loadLuaPlayerCore
+- (IBAction) onFileClose:(id)sender
 {
-    LuaEngine* pEngine = LuaEngine::getInstance();
-    
-    // set quick-cocos2d-x root path
-    std::string quickPath = SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath();
-    lua_pushstring(pEngine->getLuaStack()->getLuaState(), quickPath.c_str());
-    lua_setglobal(pEngine->getLuaStack()->getLuaState(), "__G__QUICK_PATH__");
-    
-    std::string command = projectConfig.makeCommandLine();
-    std::vector <std::string> fields;
-    player::split(fields, command, ' ');
-    
-    LuaValueArray array;
-    for (size_t i = 0; i < fields.size(); i++)
-    {
-        array.push_back(LuaValue::stringValue(fields.at(i)));
-    }
-    pEngine->getLuaStack()->pushFunctionByName("__PLAYER_OPEN__");
-    pEngine->getLuaStack()->pushLuaValue(LuaValue::stringValue(projectConfig.getProjectDir()));
-    pEngine->getLuaStack()->pushLuaValueArray(array);
-    pEngine->getLuaStack()->executeFunction(2);
+    EventCustom event("APP.EVENT");
+    event.setDataString("{\"name\":\"close\"}");
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
 
+- (void) registerEventsHandler
+{
+    [self registerKeyboardEventHandler];
+    [self registerWindowEventsHandler];
+}
+
+- (void) registerWindowEventsHandler
+{
+    auto eventDispatcher = Director::getInstance()->getEventDispatcher();
+    eventDispatcher->addCustomEventListener("APP.WINDOW_CLOSE_EVENT", [&](EventCustom* event)
+                                            {
+                                                // If script set event's result to "cancel", ignore window close event
+                                                EventCustom forwardEvent("APP.EVENT");
+                                                stringstream buf;
+                                                buf << "{\"name\":\"close\"}";
+                                                forwardEvent.setDataString(buf.str());
+                                                Director::getInstance()->getEventDispatcher()->dispatchEvent(&forwardEvent);
+                                                if (forwardEvent.getResult().compare("cancel") != 0)
+                                                {
+                                                    glfwSetWindowShouldClose(Director::getInstance()->getOpenGLView()->getWindow(), 1);
+                                                }
+                                            });
+    
+    ProjectConfig& lambdaProject = _project;
+    eventDispatcher->addCustomEventListener("APP.VIEW_SCALE", [&](EventCustom* event)
+                                            {
+                                                float scale = atof(event->getDataString().c_str());
+                                                lambdaProject.setFrameScale(scale);
+                                                cocos2d::Director::getInstance()->getOpenGLView()->setFrameZoomFactor(scale);
+                                            });
+}
+
+- (void) registerKeyboardEventHandler
+{
+    auto keyEvent = cocos2d::EventListenerKeyboard::create();
+    keyEvent->onKeyReleased = [](EventKeyboard::KeyCode key, Event*) {
+        auto event = EventCustom("APP.EVENT");
+        stringstream data;
+        data << "{\"name\":\"keyReleased\",\"data\":" << (int)key << "}";
+        event.setDataString(data.str());
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    };
+    
+    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(keyEvent, 1);
 }
 
 - (void) startup
 {
-    std::string path = SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath();
-    if (path.length() <= 0)
-    {
-        [self showPreferences:YES];
-    }
-    
-    const string projectDir = projectConfig.getProjectDir();
+    std::string path = SimulatorConfig::getInstance()->getQuickCocos2dxRootPath();
+    const string projectDir = _project.getProjectDir();
     if (projectDir.length())
     {
         FileUtils::getInstance()->setSearchRootPath(projectDir.c_str());
-        if (projectConfig.isWriteDebugLogToFile())
+        if (_project.isWriteDebugLogToFile())
         {
-            [self writeDebugLogToFile:projectConfig.getDebugLogFilePath()];
+            [self writeDebugLogToFile:_project.getDebugLogFilePath()];
         }
     }
-    
-    const string writablePath = projectConfig.getWritableRealPath();
+
+    const string writablePath = _project.getWritableRealPath();
     if (writablePath.length())
     {
         FileUtils::getInstance()->setWritablePath(writablePath.c_str());
     }
-    
-    if (projectConfig.isShowConsole())
+
+    if (_project.isShowConsole())
     {
         [self openConsoleWindow];
     }
-    
-    app = new AppDelegate();
-    bridge = new AppControllerBridge(self);
-    
-    EventDispatcher *eventDispatcher = Director::getInstance()->getEventDispatcher();
-    EventListenerCustom *_listener = EventListenerCustom::create("WELCOME_OPEN_PROJECT_ARGS", [=](EventCustom* event){
-        if (event->getDataString().length() > 0)
-        {
-            std::vector<std::string> args;
-            player::split(args, event->getDataString(), ',');
-            
-            if (args.at(args.size()-1) == "-new")
-            {
-                ProjectConfig config;
-                config.parseCommandLine(args);
-                [self newPlayerWithArgs:config];
-            }
-            else
-            {
-                projectConfig.parseCommandLine(args);
-                [self relaunch];
-            }
-        }
-    });
-    eventDispatcher->addEventListenerWithFixedPriority(_listener, 1);
-    
-    EventListenerCustom *_listener2 = EventListenerCustom::create("WELCOME_OPEN_RECENT", [=](EventCustom* event){
-        if (event->getDataString().length() > 0)
-        {
-            int index = atoi(event->getDataString().data());
-            
-            NSMutableArray *recents = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"recents"]];
-            if (index < recents.count)
-            {
-                NSDictionary *recentItem = [recents objectAtIndex:index];
-                [self relaunch: [recentItem objectForKey:@"args"]];
-            }
-        }
-    });
-    eventDispatcher->addEventListenerWithFixedPriority(_listener2, 1);
-    
-    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_NEW_PROJECT", [=](EventCustom* event) {
-        [self welcomeNewProject];
-    }), 1);
-    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_OPEN_PROJECT", [=](EventCustom* event) {
-        [self welcomeOpen];
-    }), 1);
-    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_OPEN_DOCUMENTS", [=](EventCustom* event) {
-        [self welcomeGetStarted];
-    }), 1);
-    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_OPEN_COMMUNITY", [=](EventCustom* event) {
-        [self welcomeCommunity];
-    }), 1);
-    eventDispatcher->addEventListenerWithFixedPriority(EventListenerCustom::create("WELCOME_APP_HIDE", [=](EventCustom* event) {
-        [consoleController close];
-        glfwHideWindow(eglView->getWindow());
-    }), 1);
-//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeNewProject), "WELCOME_NEW_PROJECT", NULL);
-//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpen), "WELCOME_OPEN_PROJECT", NULL);
-//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetStarted), "WELCOME_OPEN_DOCUMENTS", NULL);
-//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeGetCommunity), "WELCOME_OPEN_COMMUNITY", NULL);
-//    NotificationCenter::getInstance()->addObserver(bridge, callfuncO_selector(AppControllerBridge::onWelcomeOpenRecent), "WELCOME_OPEN_PROJECT_ARGS", NULL);
-    
-    
-    // send recent to Lua
-    LuaValueArray titleArray;
-    NSArray *recents = [[NSUserDefaults standardUserDefaults] arrayForKey:@"recents"];
-    for (NSInteger i = 0; i < [recents count]; i++)
+
+    [self loadLuaConfig];
+    if (!_project.isAppMenu())
     {
-        NSDictionary *recentItem = [recents objectAtIndex:i];
-        titleArray.push_back(LuaValue::stringValue([[recentItem objectForKey:@"title"] UTF8String]));
+        NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
+        NSArray *menuArray = [mainMenu itemArray];
+        for (int i = 1; i < [menuArray count]; i++)
+        {
+            id menu = [menuArray objectAtIndex:i];
+            [mainMenu removeItem:menu];
+        }
     }
-    app->setOpenRecents(titleArray);
     
-    app->setProjectConfig(projectConfig);
-    app->run();
-//    Application::getInstance()->run();
-    
+    // app
+    _app = new AppDelegate();
+    _app->setProjectConfig(_project);
+    _app->run();
+
     // After run, application needs to be terminated immediately.
     [NSApp terminate: self];
 }
 
 - (void) openConsoleWindow
 {
-    if (!consoleController)
+    if (!_consoleController)
     {
-        consoleController = [[ConsoleWindowController alloc] initWithWindowNibName:@"ConsoleWindow"];
+        _consoleController = [[ConsoleWindowController alloc] initWithWindowNibName:@"ConsoleWindow"];
     }
-    [consoleController.window orderFrontRegardless];
-    
+    [_consoleController.window orderFrontRegardless];
+
     //set console pipe
-    pipe = [NSPipe pipe] ;
-    pipeReadHandle = [pipe fileHandleForReading] ;
-    
-    int outfd = [[pipe fileHandleForWriting] fileDescriptor];
+    _pipe = [NSPipe pipe] ;
+    _pipeReadHandle = [_pipe fileHandleForReading] ;
+
+    int outfd = [[_pipe fileHandleForWriting] fileDescriptor];
     if (dup2(outfd, fileno(stderr)) != fileno(stderr) || dup2(outfd, fileno(stdout)) != fileno(stdout))
     {
         perror("Unable to redirect output");
-//        [self showAlert:@"Unable to redirect output to console!" withTitle:@"quick-x-player error"];
+        //        [self showAlert:@"Unable to redirect output to console!" withTitle:@"player error"];
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleNotification:) name: NSFileHandleReadCompletionNotification object: pipeReadHandle] ;
-        [pipeReadHandle readInBackgroundAndNotify] ;
+        [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleNotification:) name: NSFileHandleReadCompletionNotification object: _pipeReadHandle] ;
+        [_pipeReadHandle readInBackgroundAndNotify] ;
     }
 }
 
 - (bool) writeDebugLogToFile:(const string)path
 {
-    if (debugLogFile) return true;
+    if (_debugLogFile) return true;
     //log to file
-    if(fileHandle) return true;
+    if(_fileHandle) return true;
     NSString *fPath = [NSString stringWithCString:path.c_str() encoding:[NSString defaultCStringEncoding]];
     [[NSFileManager defaultManager] createFileAtPath:fPath contents:nil attributes:nil] ;
-    fileHandle = [NSFileHandle fileHandleForWritingAtPath:fPath];
-    [fileHandle retain];
+    _fileHandle = [NSFileHandle fileHandleForWritingAtPath:fPath];
+    [_fileHandle retain];
     return true;
 }
 
 - (void)handleNotification:(NSNotification *)note
 {
     //NSLog(@"Received notification: %@", note);
-    [pipeReadHandle readInBackgroundAndNotify] ;
+    [_pipeReadHandle readInBackgroundAndNotify] ;
     NSData *data = [[note userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    
+
     //show log to console
-    [consoleController trace:str];
-    if(fileHandle!=nil){
-        [fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+    [_consoleController trace:str];
+    if(_fileHandle!=nil){
+        [_fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
     }
-    
+
 }
 
-- (void) closeDebugLogFile
+- (void) close_debugLogFile
 {
-    if(fileHandle){
-        [fileHandle closeFile];
-        [fileHandle release];
-        fileHandle = nil;
+    if(_fileHandle){
+        [_fileHandle closeFile];
+        [_fileHandle release];
+        _fileHandle = nil;
     }
-    if (debugLogFile)
+    if (_debugLogFile)
     {
-        close(debugLogFile);
-        debugLogFile = 0;
+        close(_debugLogFile);
+        _debugLogFile = 0;
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc removeObserver:self];
     }
@@ -619,137 +421,97 @@ USING_NS_CC_EXTRA;
 
 - (void) setZoom:(float)scale
 {
-    eglView->setFrameZoomFactor(scale);
-//    Director::getInstance()->getOpenGLView()->setFrameZoomFactor(scale);
-    projectConfig.setFrameScale(scale);
+    Director::getInstance()->getOpenGLView()->setFrameZoomFactor(scale);
+    _project.setFrameScale(scale);
 }
 
--(void) setAlwaysOnTop:(BOOL)alwaysOnTop
+//-(void) setAlwaysOnTop:(BOOL)alwaysOnTop
+//{
+//    NSMenuItem *windowMenu = [[window menu] itemWithTitle:@"Window"];
+//    NSMenuItem *menuItem = [[windowMenu submenu] itemWithTitle:@"Always On Top"];
+//    if (alwaysOnTop)
+//    {
+//        [window setLevel:NSFloatingWindowLevel];
+//        [menuItem setState:NSOnState];
+//    }
+//    else
+//    {
+//        [window setLevel:NSNormalWindowLevel];
+//        [menuItem setState:NSOffState];
+//    }
+//    _isAlwaysOnTop = alwaysOnTop;
+//}
+
+- (void) runScriptAsyn:(NSString *)absScriptPath withArguments:(NSArray *) arguments
 {
-    NSMenuItem *windowMenu = [[window menu] itemWithTitle:@"Window"];
-    NSMenuItem *menuItem = [[windowMenu submenu] itemWithTitle:@"Always On Top"];
-    if (alwaysOnTop)
+    [self performSelectorInBackground:@selector(runScriptSync:withArguments:)
+                          withObjects:absScriptPath, arguments, nil];
+}
+
+- (void) runScriptSync:(NSString *)absScriptPath withArguments:(NSArray *)arguments
+{
+    if (!absScriptPath)
     {
-        [window setLevel:NSFloatingWindowLevel];
-        [menuItem setState:NSOnState];
+        CCLOG("Please check your script (%s)", absScriptPath.UTF8String);
+        return ;
     }
-    else
+    
+    _buildTask = [[NSTask alloc] init];
+    [_buildTask setLaunchPath: absScriptPath];
+
+    if (!arguments)
     {
-        [window setLevel:NSNormalWindowLevel];
-        [menuItem setState:NSOffState];
+        arguments = [NSArray array];
     }
-    isAlwaysOnTop = alwaysOnTop;
+    [_buildTask setArguments: arguments];
+    [_buildTask launch];
+
+    [_buildTask waitUntilExit];
+
+    [_buildTask release];
+    _buildTask = nil;
 }
+//
+//- (void) updateAlertUI:(NSString*) errCodeString
+//{
+//    if (!buildAlert) return;
+//
+//    int errCode = [errCodeString intValue];
+//    NSString *message = (errCode == 0) ? @"Build finished, Congraturations!" : @"OPPS, please check your code or build env";
+//    BOOL hide = (errCode == 0) ? YES : NO;
+//
+//    [buildAlert setMessageText:message];
+//    [[[buildAlert buttons] objectAtIndex:0] setTitle:@"Finish"];
+//    [[[buildAlert buttons] objectAtIndex:1] setHidden:hide];
+//}
 
-- (void) showPreferences:(BOOL)relaunch
+-(void)performSelectorInBackground:(SEL)selector withObjects:(id)object, ...
 {
-    [self showModelSheet];
-    PlayerPreferencesDialogController *controller = [[PlayerPreferencesDialogController alloc] initWithWindowNibName:@"PlayerPreferencesDialog"];
-    [NSApp beginSheet:controller.window modalForWindow:window didEndBlock:^(NSInteger returnCode) {
-        [self stopModelSheet];
-        [controller release];
-        
-        NSString *path = [[NSUserDefaults standardUserDefaults] objectForKey:@"QUICK_COCOS2DX_ROOT"];
-        SimulatorConfig::sharedDefaults()->setQuickCocos2dxRootPath([path cStringUsingEncoding:NSUTF8StringEncoding]);
-        
-        if (relaunch)
-        {
-            projectConfig.resetToWelcome();
-            [self relaunch];
-        }
-    }];
-}
-
-- (void) buildAndroidInBackground:(NSString *) scriptAbsPath
-{
-    buildTask = [[NSTask alloc] init];
-    [buildTask setLaunchPath: [NSString stringWithUTF8String:scriptAbsPath.UTF8String]];
+    NSMethodSignature *signature = [self methodSignatureForSelector:selector];
     
-    [buildTask setArguments: [NSArray array]];
+    // setup the invocation
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    invocation.target = self;
+    invocation.selector = selector;
     
-    [buildTask launch];
-    
-    [buildTask waitUntilExit];
-
-    int exitCode = [buildTask terminationStatus];
-    [buildTask release];
-    buildTask = nil;
-    
-    [self performSelectorOnMainThread:@selector(updateAlertUI:) withObject:@(exitCode) waitUntilDone:YES];
-}
-
-- (void) updateAlertUI:(NSString*) errCodeString
-{
-    if (!buildAlert) return;
-    
-    int errCode = [errCodeString intValue];
-    NSString *message = (errCode == 0) ? @"Build finished, Congraturations!" : @"OPPS, please check your code or build env";
-    BOOL hide = (errCode == 0) ? YES : NO;
-    
-    [buildAlert setMessageText:message];
-    [[[buildAlert buttons] objectAtIndex:0] setTitle:@"Finish"];
-    [[[buildAlert buttons] objectAtIndex:1] setHidden:hide];
-}
-
-
-#pragma mark -
-#pragma mark interfaces
-
-- (void) welcomeNewProject
-{
-    [self onFileNewProject:self];
-}
-
-- (void) welcomeOpen
-{
-    [self onFileOpen:self];
-}
-
-- (void) welcomeSamples
-{
-    string path = SimulatorConfig::sharedDefaults()->getQuickCocos2dxRootPath();
-    if (path.length())
+    // associate the arguments
+    va_list objects;
+    va_start(objects, object);
+    unsigned int objectCounter = 2;
+    for (id obj = object; obj != nil; obj = va_arg(objects, id))
     {
-        path.append("samples");
-        [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:path.c_str() encoding:NSUTF8StringEncoding]];
+        [invocation setArgument:&obj atIndex:objectCounter++];
     }
-}
-
-- (void) welcomeGetStarted
-{
-    Native::openURL("http://cn.cocos2d-x.org/tutorial/index?type=quick-cocos2d-x");
-}
-
-- (void) welcomeCommunity
-{
-    Native::openURL("http://www.cocoachina.com/bbs/thread.php?fid=56");
-}
-
-- (void) newPlayerWithArgs:(ProjectConfig&) config
-{
-    config.setWindowOffset(Vec2(window.frame.origin.x, window.frame.origin.y));
-    NSString *commandLine = [NSString stringWithCString:config.makeCommandLine().c_str() encoding:NSUTF8StringEncoding];
-    [self launch:[NSMutableArray arrayWithArray:[commandLine componentsSeparatedByString:@" "]]];
+    va_end(objects);
+    
+    // make sure to invoke on a background queue
+    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+    NSOperationQueue *backgroundQueue = [[NSOperationQueue alloc] init];
+    [backgroundQueue addOperation:operation];
 }
 
 #pragma mark -
 #pragma mark IB Actions
-
-- (IBAction) onServicePreferences:(id)sender
-{
-    [self showPreferences:NO];
-}
-
-- (IBAction) onFileNewProject:(id)sender
-{
-//    [self showAlert:@"Coming soon :-)" withTitle:@"quick-x-player"];
-    [self showModelSheet];
-    CreateNewProjectDialogController *controller = [[CreateNewProjectDialogController alloc] initWithWindowNibName:@"CreateNewProjectDialog"];
-    [NSApp beginSheet:controller.window modalForWindow:window didEndBlock:^(NSInteger returnCode) {
-        [self stopModelSheet];
-        [controller release];
-    }];
-}
 
 - (IBAction) onFileNewPlayer:(id)sender
 {
@@ -759,231 +521,171 @@ USING_NS_CC_EXTRA;
     [self launch:args];
 }
 
-- (IBAction) onFileOpen:(id)sender
-{
-    [self showModelSheet];
-    ProjectConfigDialogController *controller = [[ProjectConfigDialogController alloc] initWithWindowNibName:@"ProjectConfigDialog"];
-    ProjectConfig newConfig;
-    if (!projectConfig.isWelcome())
-    {
-        newConfig = projectConfig;
-    }
-    [controller setProjectConfig:newConfig];
-    [NSApp beginSheet:controller.window modalForWindow:window didEndBlock:^(NSInteger returnCode) {
-        [self stopModelSheet];
-        if (returnCode == NSRunStoppedResponse)
-        {
-            projectConfig = controller.projectConfig;
-            [self relaunch];
-        }
-        [controller release];
-    }];
-}
+//- (IBAction) onPlayerWriteDebugLogToFile:(id)sender
+//{
+//    bool isWrite = _project.isWriteDebugLogToFile();
+//    if (!isWrite)
+//    {
+//        if ([self writeDebugLogToFile:_project.get_debugLogFilePath()])
+//        {
+//            _project.setWriteDebugLogToFile(true);
+//            [(NSMenuItem*)sender setState:NSOnState];
+//        }
+//    }
+//    else
+//    {
+//        _project.setWriteDebugLogToFile(false);
+//        [self close_debugLogFile];
+//        [(NSMenuItem*)sender setState:NSOffState];
+//    }
+//}
+//
+//- (IBAction) onPlayerOpenDebugLog:(id)sender
+//{
+//    const string path = _project.get_debugLogFilePath();
+//    [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:path.c_str() encoding:NSUTF8StringEncoding]];
+//}
+//
+//- (IBAction) onPlayerRelaunch:(id)sender
+//{
+//    [self relaunch];
+//}
+//
+//- (IBAction) onPlayerShowProjectSandbox:(id)sender
+//{
+//    [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:FileUtils::sharedFileUtils()->getWritablePath().c_str() encoding:NSUTF8StringEncoding]];
+//}
+//
+//- (IBAction) onPlayerShowProjectFiles:(id)sender
+//{
+//    [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:_project.getProjectDir().c_str() encoding:NSUTF8StringEncoding]];
+//}
+//
+//- (IBAction) onScreenChangeFrameSize:(id)sender
+//{
+//    NSInteger i = [sender tag];
+//    if (i >= 0 && i < SimulatorConfig::getInstance()->getScreenSizeCount())
+//    {
+//        SimulatorScreenSize size = SimulatorConfig::getInstance()->getScreenSize((int)i);
+//        _project.setFrameSize(_project.isLandscapeFrame() ? cocos2d::Size(size.height, size.width) : cocos2d::Size(size.width, size.height));
+//        _project.setFrameScale(1.0f);
+//        [self relaunch];
+//    }
+//}
+//
+//- (IBAction) onScreenPortait:(id)sender
+//{
+//    if ([sender state] == NSOnState) return;
+//    [sender setState:NSOnState];
+//    [[[[[window menu] itemWithTitle:@"Screen"] submenu] itemWithTitle:@"Landscape"] setState:NSOffState];
+//    _project.changeFrameOrientationToPortait();
+//    [self relaunch];
+//}
+//
+//- (IBAction) onScreenLandscape:(id)sender
+//{
+//    if ([sender state] == NSOnState) return;
+//    [sender setState:NSOnState];
+//    [[[[[window menu] itemWithTitle:@"Screen"] submenu] itemWithTitle:@"Portait"] setState:NSOffState];
+//    _project.changeFrameOrientationToLandscape();
+//    [self relaunch];
+//}
+//
+//- (IBAction) onScreenZoomOut:(id)sender
+//{
+//    if ([sender state] == NSOnState) return;
+//    float scale = (float)[sender tag] / 100.0f;
+//    [self setZoom:scale];
+//    [self updateView];
+//    [self updateUI];
+//    [self updateOpenRect];
+//
+//}
+//
+//- (void) updateView
+//{
+//    auto policy = eglView->getResolutionPolicy();
+//    auto designSize = eglView->getDesignResolutionSize();
+//
+//    cocos2d::Size frameSize = _project.getFrameSize();
+//    eglView->setFrameSize(frameSize.width, frameSize.height);
+//
+//    eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
+//}
+//
+//-(IBAction) onWindowAlwaysOnTop:(id)sender
+//{
+//    [self setAlwaysOnTop:!_isAlwaysOnTop];
+//}
+//
+//-(IBAction)fileBuildAndroid:(id)sender
+//{
+//    if (!_isBuildingFinished) return;
+//
+//    if (_project.isWelcome())
+//    {
+//        [self showAlert:@"Welcome app is not for android" withTitle:@""];
+//    }
+//    else
+//    {
+//        std::string scriptPath = _project.getProjectDir() + "proj.android/build_native.sh";
+//        if (!FileUtils::getInstance()->isFileExist(scriptPath))
+//        {
+//            [self showAlert:[NSString stringWithFormat:@"%s isn't exist", scriptPath.c_str()] withTitle:@""];
+//        }
+//        else
+//        {
+//            _isBuildingFinished = NO;
+//            NSString *tmpPath = [NSString stringWithUTF8String:scriptPath.c_str()];
+//
+//            [self performSelectorInBackground:@selector(buildAndroidInBackground:)
+//                                   withObject:tmpPath];
+//
+//
+//
+//            NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+//            [alert addButtonWithTitle:@"Cancel"];
+//            [[alert addButtonWithTitle:@"How to setup android ENV"] setHidden:YES];
+//            [alert setMessageText:@"Building android target, view console :-)"];
+//            [alert setAlertStyle:NSWarningAlertStyle];
+//
+//            buildAlert = alert;
+//            [alert beginSheetModalForWindow:window
+//                          completionHandler:^(NSModalResponse returnCode) {
+//
+//                              _isBuildingFinished = YES;
+//                              if (returnCode == NSAlertFirstButtonReturn)
+//                              {
+//                                  if (_buildTask && [_buildTask isRunning])
+//                                  {
+//                                      [NSObject cancelPreviousPerformRequestsWithTarget:self];
+//                                      [_buildTask interrupt];
+//                                  }
+//                              }
+//                              else if (returnCode == NSAlertSecondButtonReturn)
+//                              {
+//                                  Native::openURL("http://quick.cocos.org/?p=415");
+//                              }
+//                          }];
+//        }
+//    }
+//}
+//
+//- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
+//{
+//    return (_isBuildingFinished);
+//}
+//
+//- (IBAction) fileBuildIOS:(id)sender
+//{
+//    if (_project.isWelcome())
+//    {
+//        [self showAlert:@"Welcome app " withTitle:@""];
+//    }
+//    else
+//    {
+//        [self showAlert:@"Coming soon :-)" withTitle:@""];
+//    }
+//}
 
-- (IBAction) onFileOpenRecent:(id)sender
-{
-    NSArray *recents = [[NSUserDefaults standardUserDefaults] objectForKey:@"recents"];
-    NSDictionary *recentItem = nil;
-    NSString *title = [sender title];
-    for (NSInteger i = [recents count] - 1; i >= 0; --i)
-    {
-        recentItem = [recents objectAtIndex:i];
-        if ([title compare:[recentItem objectForKey:@"title"]] == NSOrderedSame)
-        {
-            [self relaunch:[recentItem objectForKey:@"args"]];
-            break;
-        }
-    }
-}
-
-- (IBAction) onFileOpenRecentClearMenu:(id)sender
-{
-    [[NSUserDefaults standardUserDefaults] setObject:[NSArray array] forKey:@"recents"];
-    LuaEngine::getInstance()->getLuaStack()->executeString("cc.player.clearMenu()");
-    [self updateUI];
-}
-
-- (IBAction) onFileWelcome:(id)sender
-{
-    projectConfig.resetToWelcome();
-    [self relaunch];
-}
-
-- (IBAction) onFileClose:(id)sender
-{
-    // send close event to lua
-    cocos2d::EventCustom event("APP.EVENT");
-    std::string data = "{\"name\":\"close\"}";
-    event.setDataString(data);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
-
-//    [[NSApplication sharedApplication] terminate:self];
-}
-
-- (IBAction) onPlayerWriteDebugLogToFile:(id)sender
-{
-    bool isWrite = projectConfig.isWriteDebugLogToFile();
-    if (!isWrite)
-    {
-        if ([self writeDebugLogToFile:projectConfig.getDebugLogFilePath()])
-        {
-            projectConfig.setWriteDebugLogToFile(true);
-            [(NSMenuItem*)sender setState:NSOnState];
-        }
-    }
-    else
-    {
-        projectConfig.setWriteDebugLogToFile(false);
-        [self closeDebugLogFile];
-        [(NSMenuItem*)sender setState:NSOffState];
-    }
-}
-
-- (IBAction) onPlayerOpenDebugLog:(id)sender
-{
-    const string path = projectConfig.getDebugLogFilePath();
-    [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:path.c_str() encoding:NSUTF8StringEncoding]];
-}
-
-- (IBAction) onPlayerRelaunch:(id)sender
-{
-    [self relaunch];
-}
-
-- (IBAction) onPlayerShowProjectSandbox:(id)sender
-{
-    [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:FileUtils::sharedFileUtils()->getWritablePath().c_str() encoding:NSUTF8StringEncoding]];
-}
-
-- (IBAction) onPlayerShowProjectFiles:(id)sender
-{
-    [[NSWorkspace sharedWorkspace] openFile:[NSString stringWithCString:projectConfig.getProjectDir().c_str() encoding:NSUTF8StringEncoding]];
-}
-
-- (IBAction) onScreenChangeFrameSize:(id)sender
-{
-    NSInteger i = [sender tag];
-    if (i >= 0 && i < SimulatorConfig::sharedDefaults()->getScreenSizeCount())
-    {
-        SimulatorScreenSize size = SimulatorConfig::sharedDefaults()->getScreenSize((int)i);
-        projectConfig.setFrameSize(projectConfig.isLandscapeFrame() ? cocos2d::Size(size.height, size.width) : cocos2d::Size(size.width, size.height));
-        projectConfig.setFrameScale(1.0f);
-        [self relaunch];
-    }
-}
-
-- (IBAction) onScreenPortait:(id)sender
-{
-    if ([sender state] == NSOnState) return;
-    [sender setState:NSOnState];
-    [[[[[window menu] itemWithTitle:@"Screen"] submenu] itemWithTitle:@"Landscape"] setState:NSOffState];
-    projectConfig.changeFrameOrientationToPortait();
-    [self relaunch];
-}
-
-- (IBAction) onScreenLandscape:(id)sender
-{
-    if ([sender state] == NSOnState) return;
-    [sender setState:NSOnState];
-    [[[[[window menu] itemWithTitle:@"Screen"] submenu] itemWithTitle:@"Portait"] setState:NSOffState];
-    projectConfig.changeFrameOrientationToLandscape();
-    [self relaunch];
-}
-
-- (IBAction) onScreenZoomOut:(id)sender
-{
-    if ([sender state] == NSOnState) return;
-    float scale = (float)[sender tag] / 100.0f;
-    [self setZoom:scale];
-    [self updateView];
-    [self updateUI];
-    [self updateOpenRect];
-
-}
-
-- (void) updateView
-{
-    auto policy = eglView->getResolutionPolicy();
-    auto designSize = eglView->getDesignResolutionSize();
-    
-    cocos2d::Size frameSize = projectConfig.getFrameSize();
-    eglView->setFrameSize(frameSize.width, frameSize.height);
-    
-    eglView->setDesignResolutionSize(designSize.width, designSize.height, policy);
-}
-
--(IBAction) onWindowAlwaysOnTop:(id)sender
-{
-    [self setAlwaysOnTop:!isAlwaysOnTop];
-}
-
--(IBAction)fileBuildAndroid:(id)sender
-{
-    if (!isBuildingFinished) return;
-        
-    if (projectConfig.isWelcome())
-    {
-        [self showAlert:@"Welcome app is not for android" withTitle:@""];
-    }
-    else
-    {
-        std::string scriptPath = projectConfig.getProjectDir() + "proj.android/build_native.sh";
-        if (!FileUtils::getInstance()->isFileExist(scriptPath))
-        {
-            [self showAlert:[NSString stringWithFormat:@"%s isn't exist", scriptPath.c_str()] withTitle:@""];
-        }
-        else
-        {
-            isBuildingFinished = NO;
-            NSString *tmpPath = [NSString stringWithUTF8String:scriptPath.c_str()];
-            
-            [self performSelectorInBackground:@selector(buildAndroidInBackground:)
-                                   withObject:tmpPath];
-            
-            
-            
-            NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-            [alert addButtonWithTitle:@"Cancel"];
-            [[alert addButtonWithTitle:@"How to setup android ENV"] setHidden:YES];
-            [alert setMessageText:@"Building android target, view console :-)"];
-            [alert setAlertStyle:NSWarningAlertStyle];
-
-            buildAlert = alert;
-            [alert beginSheetModalForWindow:window
-                          completionHandler:^(NSModalResponse returnCode) {
-                              
-                              isBuildingFinished = YES;
-                              if (returnCode == NSAlertFirstButtonReturn)
-                              {
-                                  if (buildTask && [buildTask isRunning])
-                                  {
-                                      [NSObject cancelPreviousPerformRequestsWithTarget:self];
-                                      [buildTask interrupt];
-                                  }
-                              }
-                              else if (returnCode == NSAlertSecondButtonReturn)
-                              {
-                                  Native::openURL("http://quick.cocos.org/?p=415");
-                              }
-                          }];
-        }
-    }
-}
-
-- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
-{
-    return (isBuildingFinished);
-}
-
-- (IBAction) fileBuildIOS:(id)sender
-{
-    if (projectConfig.isWelcome())
-    {
-        [self showAlert:@"Welcome app " withTitle:@""];
-    }
-    else
-    {
-        [self showAlert:@"Coming soon :-)" withTitle:@""];
-    }
-}
 @end

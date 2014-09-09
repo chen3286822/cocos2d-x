@@ -45,9 +45,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;CC_LUA_ENGINE_ENABLED=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;CC_LUA_ENGINE_ENABLED=1;CC_USE_JSON=1;CC_USE_CURL=1;CC_USE_CCS_ARMATURE=1;CC_USE_EXTRA_FILTERS=1;CC_USE_WEBSOCKET=1;CC_USE_TGA=1;CC_USE_SQLITE=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(QUICK_V3_ROOT)cocos;$(QUICK_V3_ROOT)cocos\platform\win32;$(QUICK_V3_ROOT)cocos\platform\desktop;$(QUICK_V3_ROOT)cocos\audio\include;$(QUICK_V3_ROOT)extensions;$(QUICK_V3_ROOT)external;$(QUICK_V3_ROOT)external\chipmunk\include\chipmunk;$(QUICK_V3_ROOT)external\ConvertUTF;$(QUICK_V3_ROOT)external\curl\include\win32;$(QUICK_V3_ROOT)external\edtaa3func;$(QUICK_V3_ROOT)external\freetype2\include\win32;$(QUICK_V3_ROOT)external\glfw3\include\win32;$(QUICK_V3_ROOT)external\jpeg\include\win32;$(QUICK_V3_ROOT)external\json;$(QUICK_V3_ROOT)external\png\include\win32;$(QUICK_V3_ROOT)external\sqlite3\include;$(QUICK_V3_ROOT)external\tiff\include\win32;$(QUICK_V3_ROOT)external\tinyxml2;$(QUICK_V3_ROOT)external\unzip;$(QUICK_V3_ROOT)external\webp\include\win32;$(QUICK_V3_ROOT)external\websockets\include\win32;$(QUICK_V3_ROOT)external\win32-specific\gles\include\OGLES;$(QUICK_V3_ROOT)external\win32-specific\icon\include;$(QUICK_V3_ROOT)external\win32-specific\zlib\include;$(QUICK_V3_ROOT)external\xxhash;$(QUICK_V3_ROOT)external\xxtea;$(QUICK_V3_ROOT)quick\lib;$(QUICK_V3_ROOT)quick\lib\event;$(QUICK_V3_ROOT)quick\lib\extra;$(QUICK_V3_ROOT)quick\lib\lua_bindings\auto;$(QUICK_V3_ROOT)quick\lib\lua_bindings\manual;$(QUICK_V3_ROOT)quick\lib\lua_bindings\luajit\include;$(QUICK_V3_ROOT)quick\lib\lua_bindings\tolua;$(QUICK_V3_ROOT)quick\lib\lua_extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QUICK_V3_ROOT)cocos;$(QUICK_V3_ROOT)cocos\editor-support;$(QUICK_V3_ROOT)cocos\platform\win32;$(QUICK_V3_ROOT)cocos\platform\desktop;$(QUICK_V3_ROOT)cocos\audio\include;$(QUICK_V3_ROOT)extensions;$(QUICK_V3_ROOT)external;$(QUICK_V3_ROOT)external\chipmunk\include\chipmunk;$(QUICK_V3_ROOT)external\ConvertUTF;$(QUICK_V3_ROOT)external\curl\include\win32;$(QUICK_V3_ROOT)external\edtaa3func;$(QUICK_V3_ROOT)external\freetype2\include\win32;$(QUICK_V3_ROOT)external\glfw3\include\win32;$(QUICK_V3_ROOT)external\jpeg\include\win32;$(QUICK_V3_ROOT)external\json;$(QUICK_V3_ROOT)external\png\include\win32;$(QUICK_V3_ROOT)external\sqlite3\include;$(QUICK_V3_ROOT)external\tiff\include\win32;$(QUICK_V3_ROOT)external\tinyxml2;$(QUICK_V3_ROOT)external\unzip;$(QUICK_V3_ROOT)external\webp\include\win32;$(QUICK_V3_ROOT)external\websockets\include\win32;$(QUICK_V3_ROOT)external\win32-specific\gles\include\OGLES;$(QUICK_V3_ROOT)external\win32-specific\icon\include;$(QUICK_V3_ROOT)external\win32-specific\zlib\include;$(QUICK_V3_ROOT)external\xxhash;$(QUICK_V3_ROOT)external\xxtea;$(QUICK_V3_ROOT)quick\lib;$(QUICK_V3_ROOT)quick\lib\event;$(QUICK_V3_ROOT)quick\lib\extra;$(QUICK_V3_ROOT)quick\lib\lua_bindings\auto;$(QUICK_V3_ROOT)quick\lib\lua_bindings\manual;$(QUICK_V3_ROOT)quick\lib\lua_bindings\luajit\include;$(QUICK_V3_ROOT)quick\lib\lua_bindings\tolua;$(QUICK_V3_ROOT)quick\lib\lua_extensions;$(QUICK_V3_ROOT)quick\lib\codeide\protobuf-lite;$(QUICK_V3_ROOT)quick\lib\codeide;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MinimalRebuild>false</MinimalRebuild>
       <DisableSpecificWarnings>4244;4800;4056;4018</DisableSpecificWarnings>
@@ -111,8 +111,6 @@
     <ClInclude Include="..\..\..\cocos\2d\CCLabelTextFormatter.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCLabelTTF.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCLayer.h" />
-    <ClInclude Include="..\..\..\cocos\2d\CCMenu.h" />
-    <ClInclude Include="..\..\..\cocos\2d\CCMenuItem.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCMotionStreak.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCNode.h" />
     <ClInclude Include="..\..\..\cocos\2d\CCNodeGrid.h" />
@@ -143,6 +141,7 @@
     <ClInclude Include="..\..\..\cocos\3d\CCAnimationCurve.h" />
     <ClInclude Include="..\..\..\cocos\3d\CCBundle3D.h" />
     <ClInclude Include="..\..\..\cocos\3d\CCBundle3DData.h" />
+    <ClInclude Include="..\..\..\cocos\3d\CCBundleReader.h" />
     <ClInclude Include="..\..\..\cocos\3d\CCMesh.h" />
     <ClInclude Include="..\..\..\cocos\3d\CCMeshSkin.h" />
     <ClInclude Include="..\..\..\cocos\3d\CCObjLoader.h" />
@@ -159,7 +158,6 @@
     <ClInclude Include="..\..\..\cocos\base\CCConfiguration.h" />
     <ClInclude Include="..\..\..\cocos\base\CCConsole.h" />
     <ClInclude Include="..\..\..\cocos\base\CCData.h" />
-    <ClInclude Include="..\..\..\cocos\base\CCDataVisitor.h" />
     <ClInclude Include="..\..\..\cocos\base\CCDirector.h" />
     <ClInclude Include="..\..\..\cocos\base\CCEvent.h" />
     <ClInclude Include="..\..\..\cocos\base\CCEventAcceleration.h" />
@@ -207,16 +205,26 @@
     <ClInclude Include="..\..\..\cocos\base\utlist.h" />
     <ClInclude Include="..\..\..\cocos\base\ZipUtils.h" />
     <ClInclude Include="..\..\..\cocos\cocos2d.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCArray.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCBool.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCDeprecated.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCDictionary.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCDouble.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCFloat.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCInteger.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCNotificationCenter.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCSet.h" />
-    <ClInclude Include="..\..\..\cocos\deprecated\CCString.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCArmature.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureAnimation.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureDataManager.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureDefine.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCBatchNode.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCBone.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCColliderDetector.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDataReaderHelper.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDatas.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDecorativeDisplay.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDisplayFactory.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCDisplayManager.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCProcessBase.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCSkin.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCSpriteFrameCacheHelper.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCTransformHelp.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCTween.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CCUtilMath.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\CocoLoader.h" />
+    <ClInclude Include="..\..\..\cocos\editor-support\cocostudio\DictionaryHelper.h" />
     <ClInclude Include="..\..\..\cocos\math\CCAffineTransform.h" />
     <ClInclude Include="..\..\..\cocos\math\CCGeometry.h" />
     <ClInclude Include="..\..\..\cocos\math\CCMath.h" />
@@ -285,6 +293,7 @@
     <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImpl.h" />
     <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.h" />
     <ClInclude Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.h" />
+    <ClInclude Include="..\..\..\extensions\GUI\CCTextField\UITextField.h" />
     <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk.h" />
     <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk_ffi.h" />
     <ClInclude Include="..\..\..\external\chipmunk\include\chipmunk\chipmunk_private.h" />
@@ -452,6 +461,39 @@
     <ClInclude Include="..\..\..\external\win32-specific\zlib\include\zlib.h" />
     <ClInclude Include="..\..\..\external\xxhash\xxhash.h" />
     <ClInclude Include="..\..\..\external\xxtea\xxtea.h" />
+    <ClInclude Include="..\codeide\ConfigParser.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\config.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\extension_set.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\generated_message_util.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\coded_stream.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\coded_stream_inl.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream_impl.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\message_lite.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\repeated_field.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_arm_gcc.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_atomicword_compat.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_generic_gcc.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_macosx.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_gcc.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\common.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\hash.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\map-util.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\once.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\platform_macros.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\stl_util.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\stringprintf.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\template_util.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\stubs\type_traits.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\wire_format_lite.h" />
+    <ClInclude Include="..\codeide\protobuf-lite\google\protobuf\wire_format_lite_inl.h" />
+    <ClInclude Include="..\codeide\runtime\Protos.pb.h" />
+    <ClInclude Include="..\codeide\runtime\ResData.h" />
+    <ClInclude Include="..\codeide\runtime\Runtime.h" />
+    <ClInclude Include="..\codeide\VisibleRect.h" />
     <ClInclude Include="..\event\CCScriptEventDispatcher.h" />
     <ClInclude Include="..\event\CCTouch.h" />
     <ClInclude Include="..\event\CCTouchDelegateProtocol.h" />
@@ -464,13 +506,68 @@
     <ClInclude Include="..\extra\crypto\base64\libbase64.h" />
     <ClInclude Include="..\extra\crypto\CCCrypto.h" />
     <ClInclude Include="..\extra\crypto\md5\md5.h" />
+    <ClInclude Include="..\extra\filters\cocos2dFilters.h" />
+    <ClInclude Include="..\extra\filters\filters\CCBlurFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCBrightnessFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCContrastFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCCustomFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCDropShadowFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCExposureFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCGammaFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCGrayFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCHazeFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCHueFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCMaskFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCRGBFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCSaturationFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCSepiaFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCSharpenFilter.h" />
+    <ClInclude Include="..\extra\filters\filters\CCTestFilter.h" />
+    <ClInclude Include="..\extra\filters\nodes\CCFilteredSprite.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShaders.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_blur_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_brightness_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_colorramp_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_contrast_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_drop_shadow_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_drop_shadow_vert.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_embossmov_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_emboss_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_exposure_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gamma_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gaussian_blur_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gaussian_hblur_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gaussian_vblur_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_grass_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_gray_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_haze_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_hblur_vert.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_hue_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_motion_blur_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_motion_blur_vert.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_rgb_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_saturation_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_sepia_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_sharpen_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_sharpen_vert.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_test_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_test_vert.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_vblur_vert.h" />
+    <ClInclude Include="..\extra\filters\shaders\ccFilterShader_zoom_blur_frag.h" />
+    <ClInclude Include="..\extra\filters\shaders\FilterShaders.h" />
+    <ClInclude Include="..\extra\luabinding\cocos2dx_extra_luabinding.h" />
+    <ClInclude Include="..\extra\luabinding\HelperFunc_luabinding.h" />
+    <ClInclude Include="..\extra\native\CCAlertViewDelegate.h" />
+    <ClInclude Include="..\extra\native\CCNative.h" />
     <ClInclude Include="..\extra\network\CCHTTPRequest.h" />
     <ClInclude Include="..\extra\network\CCHTTPRequestDelegate.h" />
     <ClInclude Include="..\extra\network\CCNetwork.h" />
     <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_auto.hpp" />
     <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extension_auto.hpp" />
-    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extra_auto.hpp" />
+    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_extension_filter_auto.hpp" />
     <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_physics_auto.hpp" />
+    <ClInclude Include="..\lua_bindings\auto\lua_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="..\lua_bindings\luajit\include\lauxlib.h" />
     <ClInclude Include="..\lua_bindings\luajit\include\lua.h" />
     <ClInclude Include="..\lua_bindings\luajit\include\luaconf.h" />
@@ -482,9 +579,8 @@
     <ClInclude Include="..\lua_bindings\manual\Cocos2dxLuaLoader.h" />
     <ClInclude Include="..\lua_bindings\manual\LuaBasicConversions.h" />
     <ClInclude Include="..\lua_bindings\manual\LuaScriptHandlerMgr.h" />
-    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_deprecated.h" />
+    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_coco_studio_manual.hpp" />
     <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_extension_manual.h" />
-    <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_external_extra_manual.h" />
     <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_manual.hpp" />
     <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_physics_manual.hpp" />
     <ClInclude Include="..\lua_bindings\manual\Lua_web_socket.h" />
@@ -516,6 +612,7 @@
     <ClInclude Include="..\lua_extensions\socket\udp.h" />
     <ClInclude Include="..\lua_extensions\socket\wsocket.h" />
     <ClInclude Include="..\lua_extensions\zlib\lua_zlib.h" />
+    <ClInclude Include="..\ProjectConfig\ProjectConfig.h" />
     <ClInclude Include="..\ProjectConfig\SimulatorConfig.h" />
   </ItemGroup>
   <ItemGroup>
@@ -556,8 +653,6 @@
     <ClCompile Include="..\..\..\cocos\2d\CCLabelTextFormatter.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCLabelTTF.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCLayer.cpp" />
-    <ClCompile Include="..\..\..\cocos\2d\CCMenu.cpp" />
-    <ClCompile Include="..\..\..\cocos\2d\CCMenuItem.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCMotionStreak.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCNode.cpp" />
     <ClCompile Include="..\..\..\cocos\2d\CCNodeGrid.cpp" />
@@ -586,6 +681,7 @@
     <ClCompile Include="..\..\..\cocos\3d\CCAnimate3D.cpp" />
     <ClCompile Include="..\..\..\cocos\3d\CCAnimation3D.cpp" />
     <ClCompile Include="..\..\..\cocos\3d\CCBundle3D.cpp" />
+    <ClCompile Include="..\..\..\cocos\3d\CCBundleReader.cpp" />
     <ClCompile Include="..\..\..\cocos\3d\CCMesh.cpp" />
     <ClCompile Include="..\..\..\cocos\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\..\..\cocos\3d\CCObjLoader.cpp" />
@@ -600,7 +696,6 @@
     <ClCompile Include="..\..\..\cocos\base\CCConfiguration.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCConsole.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCData.cpp" />
-    <ClCompile Include="..\..\..\cocos\base\CCDataVisitor.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCDirector.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCEvent.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCEventAcceleration.cpp" />
@@ -627,7 +722,6 @@
     <ClCompile Include="..\..\..\cocos\base\CCTouch.cpp" />
     <ClCompile Include="..\..\..\cocos\base\ccTypes.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCUserDefault.cpp" />
-    <ClCompile Include="..\..\..\cocos\base\CCUserDefaultAndroid.cpp" />
     <ClCompile Include="..\..\..\cocos\base\ccUTF8.cpp" />
     <ClCompile Include="..\..\..\cocos\base\ccUtils.cpp" />
     <ClCompile Include="..\..\..\cocos\base\CCValue.cpp" />
@@ -637,12 +731,25 @@
     <ClCompile Include="..\..\..\cocos\base\TGAlib.cpp" />
     <ClCompile Include="..\..\..\cocos\base\ZipUtils.cpp" />
     <ClCompile Include="..\..\..\cocos\cocos2d.cpp" />
-    <ClCompile Include="..\..\..\cocos\deprecated\CCArray.cpp" />
-    <ClCompile Include="..\..\..\cocos\deprecated\CCDeprecated.cpp" />
-    <ClCompile Include="..\..\..\cocos\deprecated\CCDictionary.cpp" />
-    <ClCompile Include="..\..\..\cocos\deprecated\CCNotificationCenter.cpp" />
-    <ClCompile Include="..\..\..\cocos\deprecated\CCSet.cpp" />
-    <ClCompile Include="..\..\..\cocos\deprecated\CCString.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCArmature.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureAnimation.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureDataManager.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCArmatureDefine.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCBone.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCColliderDetector.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDataReaderHelper.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDatas.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDecorativeDisplay.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDisplayFactory.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCDisplayManager.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCProcessBase.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCSkin.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCSpriteFrameCacheHelper.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCTransformHelp.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCTween.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CCUtilMath.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\CocoLoader.cpp" />
+    <ClCompile Include="..\..\..\cocos\editor-support\cocostudio\DictionaryHelper.cpp" />
     <ClCompile Include="..\..\..\cocos\math\CCAffineTransform.cpp" />
     <ClCompile Include="..\..\..\cocos\math\CCGeometry.cpp" />
     <ClCompile Include="..\..\..\cocos\math\CCVertex.cpp" />
@@ -699,6 +806,7 @@
     <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\CCEditBox.cpp" />
     <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\CCEditBoxImplWin.cpp" />
     <ClCompile Include="..\..\..\extensions\GUI\CCEditBox\Win32InputBox.cpp" />
+    <ClCompile Include="..\..\..\extensions\GUI\CCTextField\UITextField.cpp" />
     <ClCompile Include="..\..\..\external\chipmunk\src\chipmunk.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
     </ClCompile>
@@ -795,6 +903,29 @@
     <ClCompile Include="..\..\..\external\unzip\unzip.cpp" />
     <ClCompile Include="..\..\..\external\xxhash\xxhash.c" />
     <ClCompile Include="..\..\..\external\xxtea\xxtea.cpp" />
+    <ClCompile Include="..\codeide\ConfigParser.cpp" />
+    <ClCompile Include="..\codeide\platform\win\Runtime_win32.cpp" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\extension_set.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\message_lite.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_gcc.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\atomicops_internals_x86_msvc.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\once.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="..\codeide\protobuf-lite\google\protobuf\wire_format_lite.cc" />
+    <ClCompile Include="..\codeide\runtime\Landscape_png.cpp" />
+    <ClCompile Include="..\codeide\runtime\PlayDisable_png.cpp" />
+    <ClCompile Include="..\codeide\runtime\PlayEnable_png.cpp" />
+    <ClCompile Include="..\codeide\runtime\Portrait_png.cpp" />
+    <ClCompile Include="..\codeide\runtime\Protos.pb.cc" />
+    <ClCompile Include="..\codeide\runtime\Runtime.cpp" />
+    <ClCompile Include="..\codeide\runtime\Shine_png.cpp" />
+    <ClCompile Include="..\codeide\VisibleRect.cpp" />
     <ClCompile Include="..\event\CCScriptEventDispatcher.cpp" />
     <ClCompile Include="..\event\CCTouchTargetNode.cpp" />
     <ClCompile Include="..\event\ScriptEventCenter.cpp" />
@@ -802,6 +933,28 @@
     <ClCompile Include="..\extra\crypto\base64\libbase64.c" />
     <ClCompile Include="..\extra\crypto\CCCrypto.cpp" />
     <ClCompile Include="..\extra\crypto\md5\md5.c" />
+    <ClCompile Include="..\extra\filters\filters\CCBlurFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCBrightnessFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCContrastFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCCustomFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCDropShadowFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCExposureFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCGammaFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCGrayFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCHazeFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCHueFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCMaskFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCRGBFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCSaturationFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCSepiaFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCSharpenFilter.cpp" />
+    <ClCompile Include="..\extra\filters\filters\CCTestFilter.cpp" />
+    <ClCompile Include="..\extra\filters\nodes\CCFilteredSprite.cpp" />
+    <ClCompile Include="..\extra\filters\shaders\ccFilterShaders.cpp" />
+    <ClCompile Include="..\extra\filters\shaders\FilterShaders.cpp" />
+    <ClCompile Include="..\extra\luabinding\cocos2dx_extra_luabinding.cpp" />
+    <ClCompile Include="..\extra\luabinding\HelperFunc_luabinding.cpp" />
     <ClCompile Include="..\extra\network\CCHTTPRequest.cpp" />
     <ClCompile Include="..\extra\network\CCNetwork.cpp" />
     <ClCompile Include="..\extra\platform\win32\CCCryptoWin32.cpp" />
@@ -809,8 +962,9 @@
     <ClCompile Include="..\extra\platform\win32\CCStorePaymentTransactionWrapper.cpp" />
     <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_auto.cpp" />
     <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extension_auto.cpp" />
-    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extra_auto.cpp" />
+    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_extension_filter_auto.cpp" />
     <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_physics_auto.cpp" />
+    <ClCompile Include="..\lua_bindings\auto\lua_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="..\lua_bindings\manual\CCLuaBridge.cpp" />
     <ClCompile Include="..\lua_bindings\manual\CCLuaEngine.cpp" />
     <ClCompile Include="..\lua_bindings\manual\CCLuaStack.cpp" />
@@ -818,9 +972,8 @@
     <ClCompile Include="..\lua_bindings\manual\Cocos2dxLuaLoader.cpp" />
     <ClCompile Include="..\lua_bindings\manual\LuaBasicConversions.cpp" />
     <ClCompile Include="..\lua_bindings\manual\LuaScriptHandlerMgr.cpp" />
-    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_deprecated.cpp" />
+    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_coco_studio_manual.cpp" />
     <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_extension_manual.cpp" />
-    <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_external_extra_manual.cpp" />
     <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_manual.cpp" />
     <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_physics_manual.cpp" />
     <ClCompile Include="..\lua_bindings\manual\Lua_web_socket.cpp" />
@@ -854,11 +1007,11 @@
     <ClCompile Include="..\lua_extensions\socket\udp.c" />
     <ClCompile Include="..\lua_extensions\socket\wsocket.c" />
     <ClCompile Include="..\lua_extensions\zlib\lua_zlib.c" />
+    <ClCompile Include="..\ProjectConfig\ProjectConfig.cpp" />
     <ClCompile Include="..\ProjectConfig\SimulatorConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\cocos\3d\CCAnimationCurve.inl" />
-    <None Include="..\..\..\cocos\base\CCUserDefault.mm" />
     <None Include="..\..\..\cocos\cocos2d-prefix.pch" />
     <None Include="..\..\..\cocos\math\Mat4.inl" />
     <None Include="..\..\..\cocos\math\MathUtil.inl" />

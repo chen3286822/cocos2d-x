@@ -1575,6 +1575,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
    tolua_function(tolua_S,"MD5",tolua_cocos2dx_extra_luabinding_Crypto_MD500);
    tolua_function(tolua_S,"MD5File",tolua_cocos2dx_extra_luabinding_Crypto_MD5File00);
   tolua_endmodule(tolua_S);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32
   tolua_cclass(tolua_S,"Native","Native","",NULL);
   tolua_beginmodule(tolua_S,"Native");
    tolua_function(tolua_S,"showActivityIndicator",tolua_cocos2dx_extra_luabinding_Native_showActivityIndicator00);
@@ -1589,6 +1590,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getDeviceName",tolua_cocos2dx_extra_luabinding_Native_getDeviceName00);
    tolua_function(tolua_S,"vibrate",tolua_cocos2dx_extra_luabinding_Native_vibrate00);
   tolua_endmodule(tolua_S);
+#endif
   tolua_constant(tolua_S,"kCCHTTPRequestMethodGET",kCCHTTPRequestMethodGET);
   tolua_constant(tolua_S,"kCCHTTPRequestMethodPOST",kCCHTTPRequestMethodPOST);
   tolua_constant(tolua_S,"kCCHTTPRequestAcceptEncodingIdentity",kCCHTTPRequestAcceptEncodingIdentity);
@@ -1600,6 +1602,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
   tolua_constant(tolua_S,"kCCHTTPRequestStateCompleted",kCCHTTPRequestStateCompleted);
   tolua_constant(tolua_S,"kCCHTTPRequestStateCancelled",kCCHTTPRequestStateCancelled);
   tolua_constant(tolua_S,"kCCHTTPRequestStateFailed",kCCHTTPRequestStateFailed);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_USE_CURL)
   tolua_cclass(tolua_S,"HTTPRequest","HTTPRequest","cc.Ref",NULL);
   tolua_beginmodule(tolua_S,"HTTPRequest");
    tolua_function(tolua_S,"createWithUrl",tolua_cocos2dx_extra_luabinding_HTTPRequest_createWithUrl00);
@@ -1626,6 +1629,7 @@ TOLUA_API int tolua_cocos2dx_extra_luabinding_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getErrorCode",tolua_cocos2dx_extra_luabinding_HTTPRequest_getErrorCode00);
    tolua_function(tolua_S,"getErrorMessage",tolua_cocos2dx_extra_luabinding_HTTPRequest_getErrorMessage00);
   tolua_endmodule(tolua_S);
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_USE_CURL)
   tolua_constant(tolua_S,"kCCNetworkStatusNotReachable",kCCNetworkStatusNotReachable);
   tolua_constant(tolua_S,"kCCNetworkStatusReachableViaWiFi",kCCNetworkStatusReachableViaWiFi);
   tolua_constant(tolua_S,"kCCNetworkStatusReachableViaWWAN",kCCNetworkStatusReachableViaWWAN);

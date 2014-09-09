@@ -26,6 +26,7 @@
 (http://libwebsockets.org)"
 
  ****************************************************************************/
+#if CC_USE_WEBSOCKET
 
 #include "WebSocket.h"
 #include "base/CCDirector.h"
@@ -722,3 +723,5 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
 }
 
 NS_CC_END
+
+#endif //CC_USE_WEBSOCKET

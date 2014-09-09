@@ -1,51 +1,40 @@
 
 #include "PlayerProtocol.h"
+#include "base/ccMacros.h"
 
 PLAYER_NS_BEGIN
 
-PlayerProtocol *PlayerProtocol::s_instance = NULL;
+PlayerProtocol *PlayerProtocol::_instance = nullptr;
 
 PlayerProtocol::PlayerProtocol()
-: m_fileDialogService(NULL)
-, m_messageBoxService(NULL)
-, m_menuService(NULL)
-, m_editBoxService(NULL)
 {
+    CCASSERT(_instance == nullptr, "CAN NOT CREATE MORE PLAYER INSTANCE");
+    _instance = this;
 }
 
 PlayerProtocol::~PlayerProtocol()
 {
-    PLAYER_SAFE_DELETE(m_fileDialogService);
-    PLAYER_SAFE_DELETE(m_messageBoxService);
-    PLAYER_SAFE_DELETE(m_menuService);
-    PLAYER_SAFE_DELETE(m_editBoxService);
-    
-    s_instance = NULL;
+    _instance = nullptr;
 }
 
 PlayerProtocol *PlayerProtocol::getInstance()
 {
-    return s_instance;
-}
-
-void PlayerProtocol::setInstance(PlayerProtocol *instance)
-{
-    s_instance = instance;
+    return _instance;
 }
 
 void PlayerProtocol::purgeInstance()
 {
-    PLAYER_SAFE_DELETE(s_instance);
+    if (_instance) delete _instance;
 }
 
-void PlayerProtocol::setPlayerSettings(PlayerSettings &settings)
+void PlayerProtocol::setPlayerSettings(const PlayerSettings &settings)
 {
-    m_settings = settings;
+    _settings = settings;
 }
 
-PlayerSettings &PlayerProtocol::getPlayerSettings()
+PlayerSettings PlayerProtocol::getPlayerSettings() const
 {
-    return m_settings;
+    return _settings;
 }
 
 PLAYER_NS_END

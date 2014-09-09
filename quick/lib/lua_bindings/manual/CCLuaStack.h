@@ -35,13 +35,9 @@ extern "C" {
 
 NS_CC_BEGIN
 
-class CCLuaStack;
-
-typedef std::map<lua_State*, CCLuaStack*> CCLuaStackMap;
-typedef CCLuaStackMap::iterator CCLuaStackMapIterator;
-
 #define kCCLuaDebuggerNone      0
 #define kCCLuaDebuggerLDT       1
+#define kCCLuaDebuggerCodeIDE   2
 #define kCCLuaDebuggerGlobalKey "DEBUG_DISABLE_QUICK_LUA_LOADER"
 
 class LuaStack : public Ref

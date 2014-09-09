@@ -43,7 +43,6 @@ class LuaEngine : public ScriptEngineProtocol
 {
 public:
     static LuaEngine* getInstance(void);
-    CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     virtual ~LuaEngine(void);
     
     virtual ccScriptType getScriptType() {
@@ -114,7 +113,6 @@ public:
     virtual int executeNodeEvent(Node* pNode, int nAction);
     virtual int executeNodeEnterFrameEvent(Node* pNode, float dt);
     virtual int executeMenuItemEvent(MenuItem* pMenuItem);
-//    virtual int executeNotificationEvent(__NotificationCenter* pNotificationCenter, const char* pszName);
     virtual int executeCallFuncActionEvent(CallFunc* pAction, Ref* pTarget = NULL);
     virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL);
     virtual int executeNodeTouchesEvent(Node* pNode, int eventType, const std::vector<Touch*>& touches, int phase);
@@ -137,15 +135,14 @@ private:
     {
     }
     bool init(void);
-    int handleNodeEvent(void* data);
-    int handleMenuClickedEvent(void* data);
+//    int handleNodeEvent(void* data);
     int handleCallFuncActionEvent(void* data);
     int handleScheduler(void* data);
-    int handleKeypadEvent(void* data);
-    int handleAccelerometerEvent(void* data);
+//    int handleKeypadEvent(void* data);
+//    int handleAccelerometerEvent(void* data);
     int handleCommonEvent(void* data);
-    int handleTouchEvent(void* data);
-    int handleTouchesEvent(void* data);
+//    int handleTouchEvent(void* data);
+//    int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
     int handleEvenCustom(void* data);
     int handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data);

@@ -143,11 +143,11 @@ bool ClippingNode::init(Node *stencil)
 void ClippingNode::onEnter()
 {
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeJavascript)
-    {
-        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
-            return;
-    }
+//    if (_scriptType == kScriptTypeJavascript)
+//    {
+//        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+//            return;
+//    }
 #endif
     
     Node::onEnter();
@@ -239,7 +239,8 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     renderer->addCommand(&_beforeVisitCmd);
     if (_alphaThreshold < 1)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX \
+		|| CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #else
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
